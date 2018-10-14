@@ -16,7 +16,7 @@ public class XMLReader {
 	public static Document parseXMLFile(String filename) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder build = factory.newDocumentBuilder();
-		File file = new File(filename);
+		File file = new File(XMLReader.class.getResource(filename).getFile());
 		return build.parse(file);
 	}
 	
