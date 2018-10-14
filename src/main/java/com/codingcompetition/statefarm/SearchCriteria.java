@@ -25,12 +25,12 @@ public class SearchCriteria {
 	
 	public boolean matches(PointOfInterest point) {
 		Map<Object, String> descriptors = point.getDescriptors();
-		
+		String name = descriptors.get("name");
 		switch (category) {
 		case NAMESTARTSWITH:
-			return false;
+			return name.startsWith(value);
 		case NAMEENDSWITH:
-			return false;
+			return name.endsWith(value);
 		default:
 			String key = category.name().toLowerCase();
 			if (!descriptors.containsKey(key)) {
