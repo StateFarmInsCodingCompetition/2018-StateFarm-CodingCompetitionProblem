@@ -30,6 +30,7 @@ public class CLI {
             int filters;
 
             while (true) {
+                System.out.println();
                 System.out.print("Enter the number of filters you would like to apply. (-1 to exit) : ");
                 filters = scanner.nextInt();
                 scanner.nextLine();
@@ -51,11 +52,11 @@ public class CLI {
                 for (int i = 0; i < filters; i++) {
                     Category category;
                     String value;
-                    
+
                     while (true) {
                         System.out.print("Enter search criteria: ");
                         String searchCriteria = scanner.nextLine();
-                        
+
                         if(Category.isValidCategory(searchCriteria)) {
                             category = Category.valueOf(searchCriteria.toUpperCase());
                             break;
@@ -72,15 +73,15 @@ public class CLI {
 
                 boolean union;
                 while (true) {
-                    System.out.println("Do you want to find results that match ANY of the filters (1) or results which match ALL of the filters(2). Enter 1 or 2: ");
+                    System.out.print("Do you want to find results that match ANY of the filters (1) or results which match ALL of the filters(2). Enter 1 or 2: ");
                     int opt = scanner.nextInt();
                     scanner.nextLine();
-                    
+
                     if (opt == 1) {
                         union = true;
                         break;
                     }
-                    
+
                     if (opt == 2) {
                         union = false;
                         break;
@@ -88,16 +89,16 @@ public class CLI {
 
                     System.out.println("Invalid input.");
                 }
-                
+
                 if (union) {
                     printLocations(streetMapDataInterpreter.findByCriterias(filterList));
                 } else {
                     HashMap<Integer, SearchCriteria> prioritizedCriteria = new HashMap<>();
-                    
+
                     for (int i = 0; i < filterList.size(); i++) {
                         prioritizedCriteria.put(i + 1, filterList.get(i));
                     }
-                    
+
                     printLocations(streetMapDataInterpreter.interpret(prioritizedCriteria));
                 }
             }
@@ -115,6 +116,8 @@ public class CLI {
     }
 
     private static void printLocations(List<PointOfInterest> locations) {
+        System.out.println();
+        System.out.println("----------------RESULTS----------------");
         for (int i = 0; i < locations.size(); i++) {
             PointOfInterest pointOfInterest = locations.get(i);
 
@@ -124,5 +127,8 @@ public class CLI {
                 System.out.println("\t" + pair.getKey() + " - " + pair.getValue());
             }
         }
+        System.out.println("---------------------------------------");
+        System.out.println();
+
     }
 }
