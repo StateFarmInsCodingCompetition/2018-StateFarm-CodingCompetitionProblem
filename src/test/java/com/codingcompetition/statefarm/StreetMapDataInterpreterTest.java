@@ -49,7 +49,6 @@ public class StreetMapDataInterpreterTest {
         MatcherAssert.assertThat(interpretedData.size(), equalTo(116134));
 
     }
-
     @Test
     public void returnsEmptyListWhenNullPassedIn() throws Exception {
         SearchCriteria nullCriteria = null;
@@ -187,8 +186,7 @@ public class StreetMapDataInterpreterTest {
         List<PointOfInterest> interpretedData = smallMetro.interpret(filter);
         assertEquals(14, interpretedData.size());
         interpretedData.forEach(pointOfInterest -> {
-            assertThat(pointOfInterest.getDescriptors().get("name")
-                    .substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
+            assertThat(pointOfInterest.getDescriptors().get("name").substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
         });
 
     }
@@ -203,8 +201,7 @@ public class StreetMapDataInterpreterTest {
         List<PointOfInterest> interpretedData = smallMetro.interpret(filteringCriteria);
         assertEquals(8, interpretedData.size());
         interpretedData.forEach(pointOfInterest -> {
-            assertThat(pointOfInterest.getDescriptors().get("name")
-                    .substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
+            assertThat(pointOfInterest.getDescriptors().get("name").substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
         });
 
     }
@@ -215,3 +212,4 @@ public class StreetMapDataInterpreterTest {
     }
 
 }
+
