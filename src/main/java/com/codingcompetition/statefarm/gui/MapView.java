@@ -141,7 +141,9 @@ public class MapView extends JPanel implements SearchCriteriaListener, MouseMoti
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		if (selected != null) {
+			//TODO show details panel for selected PointOfInterest
+		}
 	}
 
 	@Override
