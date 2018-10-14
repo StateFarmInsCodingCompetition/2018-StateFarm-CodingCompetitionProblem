@@ -23,6 +23,7 @@ public class PointOfInterestParser {
 
 
     private class POIHandler extends DefaultHandler {
+        boolean inNode = false;
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes)
                 throws SAXException {
@@ -30,13 +31,17 @@ public class PointOfInterestParser {
             if (qName.equalsIgnoreCase("node")) {
                 PointOfInterest p = new PointOfInterest(attributes.getValue("lat"), attributes.getValue("lon"));
                 objects.push(p);
-            } else if (qName.equalsIgnoreCase("tag")) {
+                inNode = true;
+            } else if (qName.equalsIgnoreCase("tag") && inNode) {
                 objects.peek().addDescriptor(attributes.getValue("k"), attributes.getValue("v"));
             }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
+            if (qName.equalsIgnoreCase("node")) {
+                inNode = false;
+            }
         }
 
         @Override

@@ -3,8 +3,6 @@ package com.codingcompetition.statefarm.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.codingcompetition.statefarm.Category;
-
 public class PointOfInterest {
     private String latitude;
     private String longitude;

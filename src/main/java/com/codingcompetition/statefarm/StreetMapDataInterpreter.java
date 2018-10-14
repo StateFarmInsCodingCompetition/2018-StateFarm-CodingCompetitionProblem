@@ -60,7 +60,10 @@ public class StreetMapDataInterpreter implements Interpreter {
                 List<PointOfInterest> all = points.stream().filter(p -> !alreadyFound.contains(p) && p.getDescriptors().containsKey(cat.toString().toLowerCase())
                         && p.getDescriptors().containsValue(value)).collect(Collectors.toList());
                 for (PointOfInterest p : all) {
-                	System.out.println(p.getDescriptors().get("name"));
+                	for (String s : p.getDescriptors().values()) {
+                		System.out.print(s + " ");
+                	}
+                	System.out.println();
                 }
                 found.addAll(all);
                 alreadyFound.addAll(all);
