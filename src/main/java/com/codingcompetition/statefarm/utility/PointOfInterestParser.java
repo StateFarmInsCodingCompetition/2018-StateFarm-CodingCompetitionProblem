@@ -23,7 +23,10 @@ public class PointOfInterestParser {
     private Stack<String> elements = new Stack<String>();
     private Stack<PointOfInterest> objects = new Stack<PointOfInterest>();
 
-
+    /**
+     * Get the list of point of interest via filename
+     * @aaram filename the filename of xml file to be parsed
+     */
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
         fileName = "src/test/resources" + fileName;
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
@@ -43,8 +46,10 @@ public class PointOfInterestParser {
         private List<PointOfInterest> poiList = new ArrayList<>();
         private PointOfInterest poi = null;
         private HashMap<Object, String> descriptor = null;
-        private int i = 0;
 
+        /**
+         * Get the List of Point of Interest
+         */
         public List<PointOfInterest> getPoiList() {
             return poiList;
         }
@@ -62,8 +67,6 @@ public class PointOfInterestParser {
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if (qName.equalsIgnoreCase("node")) {
-                i += 1;
-//                System.out.println(poiList.size());
                 poi.setDescriptors(descriptor);
                 poiList.add(poi);
             }
