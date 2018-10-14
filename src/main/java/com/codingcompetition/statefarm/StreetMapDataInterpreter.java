@@ -144,12 +144,12 @@ public class StreetMapDataInterpreter implements Interpreter {
 	    					&& (description.containsKey("name") && description.get("name").indexOf(criteria.getValue()) != -1)) {
 	    					return true;
 	    				}
-    					if (!description.containsKey(criteria.getCategory().name().toLowerCase())
-	    					|| !description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
-	    					return false;
+    					if (description.containsKey(criteria.getCategory().name().toLowerCase())
+	    					&& description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
+	    					return true;
 	    				}
     				}
-    				return true;
+    				return false;
     			}).collect(Collectors.toList());
         return filterList;
     }
