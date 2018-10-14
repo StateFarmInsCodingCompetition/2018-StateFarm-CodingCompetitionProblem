@@ -5,15 +5,25 @@ import java.util.Map;
 
 public class PointOfInterest {
 
+	private String latitude;
+	private String longtitude;
+
     public Map<Object,String> getDescriptors() {
     return new HashMap<>();
     }
 
     public String getLatitude() {
-        return "";
+        return this.latitude;
     }
 
     public String getLongitude() {
-        return "";
+        return this.longtitude;
+    }
+
+    public void setLatitude(String latitude) {
+    	this.latitude = latitude;
+    }
+    public void setLongtitude(String longtitude) {
+    	this.longtitude = longtitude;
     }
 }
