@@ -11,8 +11,6 @@ public interface Interpreter {
 
     public List<PointOfInterest> interpret(SearchCriteria criteria);
 
-    public List<PointOfInterest> interpret(SearchCriteria criteria, int radius);
-
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria);
 
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias);
