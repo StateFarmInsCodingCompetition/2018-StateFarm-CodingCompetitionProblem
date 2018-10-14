@@ -1,6 +1,8 @@
 package com.codingcompetition.statefarm.gui;
 
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,9 +12,13 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -39,6 +45,32 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 		tableModel = new OSMTableModel();
 		tableModel.setPOI(new LinkedList<>());
 		table = new JTable(tableModel);
+		table.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = table.rowAtPoint(e.getPoint());
+				PointOfInterest poi = tableModel.poi.get(row);
+				String str = "";
+				for (Object key : poi.getDescriptors().keySet()) {
+					str += " " + (String)key + ": " + poi.getDescriptors().get(key) + "\n";
+				}
+				str = str.trim();
+ 				JOptionPane.showMessageDialog(null, str, "Detail Information", JOptionPane.INFORMATION_MESSAGE);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+
+			@Override
+			public void mouseExited(MouseEvent e) {}
+		});
 		JScrollPane scroll = new JScrollPane(table);
 		this.add(scroll);
 		
@@ -73,7 +105,7 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 	}
 	
 	private class OSMTableModel extends DefaultTableModel {
-		private List<PointOfInterest> poi;
+		List<PointOfInterest> poi;
 		
 		public void setPOI(List<PointOfInterest> poi) {
 			this.poi = poi;
