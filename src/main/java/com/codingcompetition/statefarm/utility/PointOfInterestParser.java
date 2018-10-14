@@ -16,12 +16,6 @@ import java.util.Stack;
 
 public class PointOfInterestParser {
 
-
-    // Stacks for storing the elements and objects.
-    private Stack<String> elements = new Stack<String>();
-    private Stack<PointOfInterest> objects = new Stack<PointOfInterest>();
-
-
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
