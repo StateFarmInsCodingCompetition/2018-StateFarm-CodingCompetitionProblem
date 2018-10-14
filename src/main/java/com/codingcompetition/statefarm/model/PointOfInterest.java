@@ -23,10 +23,8 @@ public class PointOfInterest {
         for(int i = 0; i < len; i++) {
             n = children.item(i);
             if(!n.getNodeName().equalsIgnoreCase("tag")) {
-                System.out.println(n.getNodeName());
                 continue;
             }
-            System.out.println(n.getNodeName());
             NamedNodeMap m = n.getAttributes();
             descriptors.put(m.getNamedItem("k").getNodeValue(), m.getNamedItem("v").getNodeValue());
         }
