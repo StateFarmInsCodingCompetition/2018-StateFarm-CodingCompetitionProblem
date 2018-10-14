@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.xml.sax.SAXException;
 
@@ -41,6 +42,15 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-        return null;
+        return interestList.stream()
+        		.filter(poi -> {
+        			for (SearchCriteria criteria : criterias) {
+        				if (criteria.matches(poi)) {
+        					return true;
+        				}
+        			}
+        			return false;
+        		})
+        		.collect(Collectors.toList());
     }
 }
