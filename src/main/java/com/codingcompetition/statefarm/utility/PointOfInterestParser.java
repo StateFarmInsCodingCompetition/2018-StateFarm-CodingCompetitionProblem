@@ -1,13 +1,14 @@
 package com.codingcompetition.statefarm.utility;
 
 import com.codingcompetition.statefarm.model.PointOfInterest;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,8 +23,19 @@ public class PointOfInterestParser {
     private Stack<PointOfInterest> objects = new Stack<PointOfInterest>();
 
 
-    public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
-   return null;
+    public List<PointOfInterest> parse(String fileName) throws IOException, SAXException, ParserConfigurationException {
+        List<PointOfInterest> result = new ArrayList<>();
+        ClassLoader classLoader = getClass().getClassLoader();
+        File inputFile = new File(classLoader.getResource(fileName).getFile());
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(inputFile);
+        doc.getDocumentElement().normalize();
+
+        NodeList nList = doc.getElementsByTagName("meta");
+
+        return null;
     }
 
 }
