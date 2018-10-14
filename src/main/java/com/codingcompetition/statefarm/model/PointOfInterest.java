@@ -44,7 +44,8 @@ public class PointOfInterest {
                     String k = subattributes.getNamedItem("k").getNodeValue();
                     String v = subattributes.getNamedItem("v").getNodeValue();
                     try {
-                        items.put(Category.valueOf(k.toUpperCase()), v);
+                        Category.valueOf(k.toUpperCase());
+                        items.put(k.toLowerCase(), v);
                     } catch (IllegalArgumentException e){
 
                 }
