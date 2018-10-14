@@ -15,7 +15,7 @@ public class StreetMapDataInterpreter implements Interpreter {
 
 	private List<PointOfInterest> pois;
 	
-    public StreetMapDataInterpreter(String s) throws IOException, SAXException {
+    public StreetMapDataInterpreter(String s) throws IOException, SAXException, ParserConfigurationException {
     	PointOfInterestParser poiParser = new PointOfInterestParser();
     	pois = poiParser.parse(s);
     }

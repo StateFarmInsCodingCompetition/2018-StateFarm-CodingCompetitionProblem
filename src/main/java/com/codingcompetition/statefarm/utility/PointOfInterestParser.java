@@ -30,8 +30,13 @@ public class PointOfInterestParser {
     			String lon = attributes.getValue("lon");
     			
     			PointOfInterest poi = new PointOfInterest(lat, lon);
+    			objects.push(poi);
+    		} else if(qName.equals("tag")) {
+    			String key = attributes.getValue("k");
+    			String val = attributes.getValue("v");
     			
-    			objects.add(poi);
+    			PointOfInterest poi = objects.peek();
+    			poi.addDescriptor(key, val);
     		}
     	}
     	
@@ -45,15 +50,15 @@ public class PointOfInterestParser {
     	}
     }
     
-    public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
+    public List<PointOfInterest> parse(String fileName) throws IOException, SAXException, ParserConfigurationException {
     	SAXParserFactory parserFactory = SAXParserFactory.newInstance();
     	SAXParser parser = parserFactory.newSAXParser();
     	
     	MyHandler handler = new MyHandler();
     	
-    	InputStream is = new FileInputStream(fileName);
+    	InputStream is = PointOfInterestParser.class.getResourceAsStream(fileName);
     	parser.parse(is, handler);
-   return null;
+    	return new ArrayList<>(objects);
     }
 
 }
