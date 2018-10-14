@@ -22,7 +22,7 @@ public class PointOfInterestParser {
     private Stack<String> elements = new Stack<String>();
     private Stack<PointOfInterest> objects = new Stack<PointOfInterest>();
 
-    public class MyHandler extends DefaultHandler{
+    public class MyHandler extends DefaultHandler {
     	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
     		if(qName.equals("node")) {
     			String lat = attributes.getValue("lat");
@@ -39,6 +39,7 @@ public class PointOfInterestParser {
     		}
     	}
     	
+    	/*
     	public void endElement(String uri, String localName, String qName) throws SAXException {
     		
     	}
@@ -47,6 +48,7 @@ public class PointOfInterestParser {
     		
     		
     	}
+    	*/
     }
     
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException, ParserConfigurationException {

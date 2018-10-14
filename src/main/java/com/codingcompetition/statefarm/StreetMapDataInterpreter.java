@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class StreetMapDataInterpreter implements Interpreter {
 
 	private List<PointOfInterest> pois;
+	private final String nameCriteriaKey = "name";
 
 	public StreetMapDataInterpreter(String s) throws IOException, SAXException, ParserConfigurationException {
 		PointOfInterestParser poiParser = new PointOfInterestParser();
@@ -27,7 +28,6 @@ public class StreetMapDataInterpreter implements Interpreter {
 
 	@Override
 	public List<PointOfInterest> interpret(SearchCriteria criteria) {
-		String nameCriteriaKey = Category.NAME.name().toLowerCase();
 		List<PointOfInterest> list = new ArrayList<>();
 
 		if (criteria == null)
@@ -44,8 +44,7 @@ public class StreetMapDataInterpreter implements Interpreter {
 
 			String name = desc.get(nameCriteriaKey);
 			if (name != null) {
-				String value = criteria.value.toLowerCase();
-				name = name.toLowerCase();
+				String value = criteria.value;
 				if ((criteria.cat == Category.NAMESTARTSWITH && name.startsWith(value))
 						|| (criteria.cat == Category.NAMEENDSWITH && name.endsWith(value)))
 					list.add(poi);
@@ -56,7 +55,6 @@ public class StreetMapDataInterpreter implements Interpreter {
 
 	@Override
 	public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-		String nameCriteriaKey = Category.NAME.name().toLowerCase();
 		List<PointOfInterest> list = new ArrayList<>();
 
 		for (PointOfInterest poi : pois) {
@@ -65,8 +63,8 @@ public class StreetMapDataInterpreter implements Interpreter {
 			boolean isValid = true;
 			while ((criteria = prioritizedCriteria.get(i)) != null) {
 				Map<Object, String> desc = poi.getDescriptors();
-				
-				if(criteria.cat != Category.NAMESTARTSWITH && criteria.cat != Category.NAMEENDSWITH) {
+
+				if (criteria.cat != Category.NAMESTARTSWITH && criteria.cat != Category.NAMEENDSWITH) {
 					String key = criteria.cat.name().toLowerCase();
 					String val = desc.get(key);
 					if (val == null || !val.equals(criteria.value)) {
@@ -74,11 +72,10 @@ public class StreetMapDataInterpreter implements Interpreter {
 						break;
 					}
 				}
-				
+
 				String name = desc.get(nameCriteriaKey);
 				if (name != null) {
-					String value = criteria.value.toLowerCase();
-					name = name.toLowerCase();
+					String value = criteria.value;
 					if ((criteria.cat == Category.NAMESTARTSWITH && !name.startsWith(value))
 							|| (criteria.cat == Category.NAMEENDSWITH && !name.endsWith(value))) {
 						isValid = false;
@@ -96,23 +93,24 @@ public class StreetMapDataInterpreter implements Interpreter {
 
 	@Override
 	public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-		String nameCriteriaKey = Category.NAME.name().toLowerCase();
 		List<PointOfInterest> list = new ArrayList<>();
 
 		for (PointOfInterest poi : pois) {
 			for (SearchCriteria criteria : criterias) {
 				Map<Object, String> desc = poi.getDescriptors();
-				String key = criteria.cat.name().toLowerCase();
-				String val = desc.get(key);
-				if (val != null && val.equals(criteria.value)) {
-					list.add(poi);
-					break;
+
+				if (criteria.cat != Category.NAMESTARTSWITH && criteria.cat != Category.NAMEENDSWITH) {
+					String key = criteria.cat.name().toLowerCase();
+					String val = desc.get(key);
+					if (val != null && val.equals(criteria.value)) {
+						list.add(poi);
+						break;
+					}
 				}
 
 				String name = desc.get(nameCriteriaKey);
 				if (name != null) {
-					String value = criteria.value.toLowerCase();
-					name = name.toLowerCase();
+					String value = criteria.value;
 					if ((criteria.cat == Category.NAMESTARTSWITH && name.startsWith(value))
 							|| (criteria.cat == Category.NAMEENDSWITH && name.endsWith(value))) {
 						list.add(poi);

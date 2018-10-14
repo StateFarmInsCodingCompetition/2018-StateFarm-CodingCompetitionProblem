@@ -21,9 +21,7 @@ public class PointOfInterest {
 		try {
 			Category.valueOf(k.toUpperCase());
 			desc.put(k, v);
-		} catch (IllegalArgumentException e) {
-			
-		}
+		} catch (IllegalArgumentException e) {}
 	}
 
     public Map<Object,String> getDescriptors() {
