@@ -14,11 +14,14 @@ public class PointOfInterest {
         this.descriptors = new HashMap<>();
     }
 
-    public PointOfInterest(String latitude, String longtitude, Map<Object, String> descriptors) {
+    public PointOfInterest(String latitude, String longtitude) {
         this.latitude = latitude;
         this.longitude = longtitude;
-        this.descriptors = descriptors;
+        this.descriptors = null;
+    }
 
+    public void setDescriptors(Map<Object, String> descriptors) {
+        this.descriptors = descriptors;
     }
 
     public Map<Object,String> getDescriptors() {
