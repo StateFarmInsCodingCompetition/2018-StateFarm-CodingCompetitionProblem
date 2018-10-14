@@ -52,7 +52,7 @@ public class PointOfInterestParser {
                         if (line.contains("<tag")) {
                             int firstValueIndex = line.indexOf("=\"");
                             line = line.substring(line.lastIndexOf(' ', firstValueIndex) + 1);
-                            String key = parseKey(line);
+                            String key = parseValue(line);
                             firstValueIndex = line.indexOf("=\"", firstValueIndex + 1);
                             line = line.substring(line.lastIndexOf(' ', firstValueIndex) + 1);
                             String value = parseValue(line);
