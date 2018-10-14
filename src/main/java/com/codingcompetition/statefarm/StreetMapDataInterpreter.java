@@ -40,6 +40,9 @@ public class StreetMapDataInterpreter implements Interpreter {
      */
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
+        if (criteria == null)
+            return new ArrayList<>();
+
         return this.pointsOfInterest.stream()
                 .filter(criteria::test)
                 .collect(Collectors.toList());
