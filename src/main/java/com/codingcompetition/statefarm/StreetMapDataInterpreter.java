@@ -7,9 +7,12 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class StreetMapDataInterpreter implements Interpreter {
 
@@ -35,7 +38,8 @@ public class StreetMapDataInterpreter implements Interpreter {
     	}
     	List<PointOfInterest> filterList = listPoints.stream()
     			.filter(point -> {
-    				Map<Object, String> description = point.getDescriptors();
+    				Map<String, String> description = point.getDescriptors();
+    				
     				if (!description.containsKey(criteria.getCategory())
     					|| !description.get(criteria.getCategory()).equals(criteria.getValue())) {
     					return false;
@@ -50,7 +54,8 @@ public class StreetMapDataInterpreter implements Interpreter {
     	if (prioritizedCriteria == null) {
     		return new ArrayList<PointOfInterest>();
     	}
-    	List<PointOfInterest> filterList = listPoints.stream()
+
+    	Set<PointOfInterest> filterSet = new TreeSet<>(listPoints.stream()
     			.filter(point -> {
     				Map<Object, String> description = point.getDescriptors();
    
@@ -60,15 +65,60 @@ public class StreetMapDataInterpreter implements Interpreter {
     					if (prioritizedCriteria.containsKey(i)) {
     						SearchCriteria criteria = prioritizedCriteria.get(i);
     						
-    						if (!description.containsKey(criteria.getCategory())
-		    					|| !description.get(criteria.getCategory()).equals(criteria.getValue())) {
-		    					return false;
+    						if (description.containsKey(criteria.getCategory())
+		    					&& description.get(criteria.getCategory()).equals(criteria.getValue())) {
+		    					return true;
     						}
     					}
     				}
-    				return true;
-    			}).collect(Collectors.toList());
-    	
+    				return false;
+    			}).sorted(new java.util.Comparator<PointOfInterest>() {
+    	    		@Override
+    	    		public int compare(PointOfInterest a, PointOfInterest b) {
+    	    			Map<Object, String> descriptionA = a.getDescriptors();
+    	    			Map<Object, String> descriptionB = a.getDescriptors();
+    	    			int numCriteria = prioritizedCriteria.size();
+    	    			for (int i = 1; i <= numCriteria; i++) {
+    						if (prioritizedCriteria.containsKey(i)) {
+    							SearchCriteria criteria = prioritizedCriteria.get(i);
+    							boolean checkA = descriptionA.containsKey(criteria.getCategory());
+    							boolean checkB = descriptionB.containsKey(criteria.getCategory());
+    							if ((checkA && checkB) || (!checkA && !checkB)) {
+    		    					continue;
+    							} else if (checkA) {
+    								return -1;
+    							}
+    							return 1;
+    							
+    						}
+    					}
+    	    			return 0;
+    	    		}
+    	    	}).collect(Collectors.toList()));
+//    	Set<PointOfInterest> setPoints = new TreeSet<>(new java.util.Comparator<PointOfInterest>() {
+//    		@Override
+//    		public int compare(PointOfInterest a, PointOfInterest b) {
+//    			Map<Object, String> descriptionA = a.getDescriptors();
+//    			Map<Object, String> descriptionB = a.getDescriptors();
+//    			int numCriteria = prioritizedCriteria.size();
+//    			for (int i = 1; i <= numCriteria; i++) {
+//					if (prioritizedCriteria.containsKey(i)) {
+//						SearchCriteria criteria = prioritizedCriteria.get(i);
+//						boolean checkA = descriptionA.containsKey(criteria.getCategory());
+//						boolean checkB = descriptionB.containsKey(criteria.getCategory());
+//						if ((checkA && checkB) || (!checkA && !checkB)) {
+//	    					continue;
+//						} else if (checkA) {
+//							return -1;
+//						}
+//						return 1;
+//						
+//					}
+//				}
+//    			return 0;
+//    		}
+//    	});
+    	List<PointOfInterest> filterList = new ArrayList<>(filterSet);
         return filterList;
     }
 

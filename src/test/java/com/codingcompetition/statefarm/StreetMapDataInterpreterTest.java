@@ -74,10 +74,11 @@ public class StreetMapDataInterpreterTest {
 
     @Test
     public void findCriteriasFunctionsWithOne() throws Exception {
+    	System.out.println("find");
         List<SearchCriteria> searchCriterias = new ArrayList<>();
         Map<Category, String> criterias = null;
         SearchCriteria criteria;
-
+        
         searchCriterias.add(buildSearchCriteria(Category.NAME, "Wendy's"));
 
         List<PointOfInterest> interpretedData = smallMetro.findByCriterias(searchCriterias);

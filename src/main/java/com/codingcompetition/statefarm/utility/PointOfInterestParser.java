@@ -53,7 +53,7 @@ public class PointOfInterestParser {
             	Node currentNode = nodeList.item(i);
             	PointOfInterest currentPOT = getPointOfInterest(currentNode.getAttributes());
             	System.out.println(i);
-            	System.out.println(currentNode.getAttributes().getLength());
+//            	System.out.println(currentNode.getAttributes().getLength());
                 potList.add(currentPOT);
      
             }
