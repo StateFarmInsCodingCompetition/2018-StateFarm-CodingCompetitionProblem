@@ -1,19 +1,27 @@
 package com.codingcompetition.statefarm.model;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class PointOfInterest {
+	
+	private String latitude, longitude;
+	private Map<Object, String> descriptors;
+	
+	public PointOfInterest(String lat, String lon, Map<Object, String> desc) {
+		latitude = lat;
+		longitude = lon;
+		descriptors = desc;
+	}
 
     public Map<Object,String> getDescriptors() {
-    return new HashMap<>();
+    	return descriptors;
     }
 
     public String getLatitude() {
-        return "";
+        return latitude;
     }
 
     public String getLongitude() {
-        return "";
+        return longitude;
     }
 }
