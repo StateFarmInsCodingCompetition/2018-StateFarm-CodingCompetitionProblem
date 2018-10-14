@@ -28,7 +28,7 @@ public class PointOfInterest {
         return longitude;
     }
 
-    public void addDescriptor(Category key, String value) {
+    public void addDescriptor(String key, String value) {
         this.descriptors.put(key, value);
     }
 }

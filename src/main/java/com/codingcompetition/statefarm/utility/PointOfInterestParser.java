@@ -58,9 +58,9 @@ public class PointOfInterestParser {
                 NamedNodeMap childAttributeMap = childNode.getAttributes();
                 String key = childAttributeMap.getNamedItem("k").getNodeValue();
                 try {
-                    Category category = Category.valueOf(key.toUpperCase());
+                    Category.valueOf(key.toUpperCase());
                     String value = childAttributeMap.getNamedItem("v").getNodeValue();
-                    poi.addDescriptor(category, value);
+                    poi.addDescriptor(key, value);
                 } catch (IllegalArgumentException ex) {
 
                 }

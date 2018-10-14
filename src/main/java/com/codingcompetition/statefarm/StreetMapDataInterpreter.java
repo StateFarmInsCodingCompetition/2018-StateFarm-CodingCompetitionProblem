@@ -7,24 +7,37 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StreetMapDataInterpreter implements Interpreter {
+    private List<PointOfInterest> poiList;
 
-
-    public StreetMapDataInterpreter(String s) {
+    public StreetMapDataInterpreter(String fileName) {
+        PointOfInterestParser pointOfInterestParser = new PointOfInterestParser();
+        try {
+            poiList = pointOfInterestParser.parse(fileName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public List<PointOfInterest> interpret() {
-        return null;
+        return poiList;
     }
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-        return null;
+        if (criteria == null) {
+            return new ArrayList<>();
+        }
+
+        List<SearchCriteria> criteriaList = new ArrayList<>();
+        criteriaList.add(criteria);
+        return findByCriterias(criteriaList);
     }
 
     @Override
@@ -34,6 +47,21 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-        return null;
+        List<PointOfInterest> res = new ArrayList<>();
+        if (criterias == null || criterias.size() == 0) {
+            return res;
+        }
+
+        for (PointOfInterest curPoi : poiList) {
+            Map<Object, String> desMap = curPoi.getDescriptors();
+            for (SearchCriteria criteria : criterias) {
+                if (desMap.containsKey(criteria.getCategory()) && desMap.get(criteria.getCategory()).equals(criteria.getValue())) {
+                    res.add(curPoi);
+                    break;
+                }
+            }
+        }
+
+        return res;
     }
 }
