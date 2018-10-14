@@ -1,9 +1,9 @@
-Your team (name of each individual participating):
-How many JUnits were you able to get to pass? 
+Your team (name of each individual participating): Joshua Smith
+How many JUnits were you able to get to pass? All of them (16)
 
 Document and describe any enhancements included to help the judges properly grade your submission.
-	Step 1:
-	Step 2: 
+	I slightly modified the api to use a SearchPredicate interface and added default methods in it in order
+	to do logical operations of the queries. That way, you can to more complex searches of nodes. However, I didn't make a frontend for it sadly :(
 	
 	
 Feedback for the coding competition?  Things you would like to see in future events?
