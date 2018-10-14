@@ -45,6 +45,11 @@ public class StreetMapDataInterpreter implements Interpreter {
     }
 
     @Override
+    public List<PointOfInterest> interpret(SearchCriteria criteria, int radius) {
+        return null;
+    }
+
+    @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
         List<PointOfInterest> res = new ArrayList<>();
         if (prioritizedCriteria == null || prioritizedCriteria.size() == 0) {
