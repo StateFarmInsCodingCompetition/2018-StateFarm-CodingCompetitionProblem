@@ -13,6 +13,8 @@ public class SearchCriteria {
 		return category;
 	}
 
+	public String getLowerCategory() {return category.name().toLowerCase();}
+
 	public String getVal() {
 		return val;
 	}

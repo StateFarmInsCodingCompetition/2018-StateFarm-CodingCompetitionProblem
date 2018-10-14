@@ -49,16 +49,16 @@ public class StreetMapDataInterpreter implements Interpreter {
             System.out.println(descriptors.get(criteria.getCategory()));
             int criteriaStringLength = criteria.getVal().length();
             if (criteria.getCategory().equals(Category.NAMESTARTSWITH)) {
-                if (descriptors.get(Category.NAME) != null && descriptors.get(Category.NAME).substring(0, criteriaStringLength).equals(criteria.getVal())) {
+                if (descriptors.get("name") != null && descriptors.get("name").substring(0, criteriaStringLength).equals(criteria.getVal())) {
                     matchedCriteria.add(interpretedData.get(i));
                 }
             }
             else if (criteria.getCategory().equals(Category.NAMEENDSWITH)) {
-                if (descriptors.get(Category.NAME) != null && descriptors.get(Category.NAME).substring(descriptors.get(Category.NAME).length() - criteriaStringLength).equals(criteria.getVal())) {
+                if (descriptors.get("name") != null && descriptors.get("name").substring(descriptors.get("name").length() - criteriaStringLength).equals(criteria.getVal())) {
                     matchedCriteria.add(interpretedData.get(i));
                 }
             }
-            else if (descriptors.get(criteria.getCategory()) != null && descriptors.get(criteria.getCategory()).equals(criteria.getVal())) {
+            else if (descriptors.get(criteria.getLowerCategory()) != null && descriptors.get(criteria.getLowerCategory()).equals(criteria.getVal())) {
                 matchedCriteria.add(interpretedData.get(i));
             }
         }
@@ -79,18 +79,18 @@ public class StreetMapDataInterpreter implements Interpreter {
                 boolean changed = false;
                 int criteriaStringLength = instant.getVal().length();
                 if (instant.getCategory().equals(Category.NAMESTARTSWITH)) {
-                    if (descriptors.get(Category.NAME) != null && descriptors.get(Category.NAME).substring(0, criteriaStringLength).equals(instant.getVal())) {
+                    if (descriptors.get("name") != null && descriptors.get("name").substring(0, criteriaStringLength).equals(instant.getVal())) {
                         count++;
                         changed = true;
                     }
                 }
                 else if (instant.getCategory().equals(Category.NAMEENDSWITH)) {
-                    if (descriptors.get(Category.NAME) != null && descriptors.get(Category.NAME).substring(descriptors.get(Category.NAME).length() - criteriaStringLength).equals(instant.getVal())) {
+                    if (descriptors.get("name") != null && descriptors.get("name").substring(descriptors.get("name").length() - criteriaStringLength).equals(instant.getVal())) {
                         count++;
                         changed = true;
                     }
                 }
-                else if (descriptors.get(instant.getCategory()) != null && descriptors.get(instant.getCategory()).equals(instant.getVal())) {
+                else if (descriptors.get(instant.getLowerCategory()) != null && descriptors.get(instant.getLowerCategory()).equals(instant.getVal())) {
                     count++;
                     changed = true;
                 }
@@ -117,16 +117,16 @@ public class StreetMapDataInterpreter implements Interpreter {
                 boolean changed = false;
                 int criteriaStringLength = instant.getVal().length();
                 if (instant.getCategory().equals(Category.NAMESTARTSWITH)) {
-                    if (descriptors.get(Category.NAME) != null && descriptors.get(Category.NAME).substring(0, criteriaStringLength).equals(instant.getVal())) {
+                    if (descriptors.get("name") != null && descriptors.get("name").substring(0, criteriaStringLength).equals(instant.getVal())) {
                         changed = true;
                     }
                 }
                 else if (instant.getCategory().equals(Category.NAMEENDSWITH)) {
-                    if (descriptors.get(Category.NAME) != null && descriptors.get(Category.NAME).substring(descriptors.get(Category.NAME).length() - criteriaStringLength).equals(instant.getVal())) {
+                    if (descriptors.get("name") != null && descriptors.get("name").substring(descriptors.get("name").length() - criteriaStringLength).equals(instant.getVal())) {
                         changed = true;
                     }
                 }
-                else if (descriptors.get(instant.getCategory()) != null && descriptors.get(instant.getCategory()).equals(instant.getVal())) {
+                else if (descriptors.get(instant.getLowerCategory()) != null && descriptors.get(instant.getLowerCategory()).equals(instant.getVal())) {
                     changed = true;
                 }
 
