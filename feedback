@@ -1,9 +1,16 @@
 Your team (name of each individual participating):
+An Q Tran
+Kiet Tran
 How many JUnits were you able to get to pass? 
+13
 
 Document and describe any enhancements included to help the judges properly grade your submission.
-	Step 1:
-	Step 2: 
+	Step 1: Populate longtitude and latitude of point of intertest.
+	Step 2: Populate descriptors hash map of each point of interest with key and value.
+	Step 3: modify all the search criteria to align well with the test.
+	Step 4: Run test to make sure all done.
 	
 	
 Feedback for the coding competition?  Things you would like to see in future events?
+
+More documentation and expectation about the problem. We have a great time btw (:
