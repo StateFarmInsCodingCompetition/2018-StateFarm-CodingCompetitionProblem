@@ -1,7 +1,9 @@
 package com.codingcompetition.statefarm.utility;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.xml.parsers.SAXParser;
@@ -30,7 +32,10 @@ public class PointOfInterestParser {
 
 			if (qName.equalsIgnoreCase("NODE")) {
 
-				objects.push(new PointOfInterest(elements.pop(), elements.pop()));
+				Map<Object, String> descriptors = new HashMap<>();
+				descriptors.put("latitude", elements.pop());
+				descriptors.put("longitude", elements.pop());
+				objects.push(new PointOfInterest(descriptors));
 			}
 		}
 	};
