@@ -28,7 +28,9 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-        return pointsOfInterest.stream().filter(criteria::test).collect(Collectors.toList());
+        return pointsOfInterest.stream()
+                .filter(criteria::test)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -38,12 +40,8 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-        Stream<PointOfInterest> stream = this.pointsOfInterest.stream();
-        
-        for (SearchCriteria criteria : criterias) {
-            stream = stream.filter(criteria::test);
-        }
-
-        return stream.collect(Collectors.toList());
+        return this.pointsOfInterest.stream()
+                .filter(poi -> criterias.stream().anyMatch(criteria -> criteria.test(poi)))
+                .collect(Collectors.toList());
     }
 }
