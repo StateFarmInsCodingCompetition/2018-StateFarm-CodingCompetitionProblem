@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StreetMapDataInterpreter implements Interpreter {
     private List<PointOfInterest> points;
@@ -51,7 +52,11 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        return null;
+        Stream<PointOfInterest> st = points.stream();
+        for (Map.Entry<Integer, SearchCriteria> entry : prioritizedCriteria.entrySet()) {
+            st = st.filter(p -> matchesCriteria(p, entry.getValue()));
+        }
+        return st.collect(Collectors.toList());
     }
 
     @Override
