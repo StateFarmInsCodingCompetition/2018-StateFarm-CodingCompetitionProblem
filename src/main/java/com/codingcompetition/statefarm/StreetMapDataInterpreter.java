@@ -12,46 +12,69 @@ import java.util.stream.Stream;
 
 public class StreetMapDataInterpreter implements Interpreter {
 
+    // A list containing the points of interest
     private List<PointOfInterest> pointsOfInterest;
 
+    /**
+     * Parses and interprets street map data from an XML file.
+     * @param fileName the name of the XML file
+     */
     public StreetMapDataInterpreter(String fileName) throws ParserConfigurationException, SAXException, IOException {
         PointOfInterestParser parser = new PointOfInterestParser();
         this.pointsOfInterest = parser.parse(fileName);
     }
 
+    /**
+     * Fetch all points of interest.
+     * @return a list containing all points of interest
+     */
     @Override
     public List<PointOfInterest> interpret() {
         return this.pointsOfInterest;
     }
 
+    /**
+     * Finds the points of interest matching the given criteria.
+     * @param criteria the criteria to search for
+     * @return a list containing the points which match the criteria
+     */
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-        return pointsOfInterest.stream()
+        return this.pointsOfInterest.stream()
                 .filter(criteria::test)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Performs a prioritized search operation which assigns scores to each
+     * point of interest based on the prioritized criteria which they match,
+     * and returns the points with the highest scores.
+     * @param prioritizedCriteria a map of criteria, keyed by a numeric priority
+     * @return a list containing the top, matching results
+     */
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
+        // Compute the scores of each point of interest
         Map<PointOfInterest, Integer> scores = new HashMap<>();
-
         prioritizedCriteria.forEach((priority, criteria) -> {
             this.interpret(criteria).forEach(pointOfInterest -> {
                 scores.put(pointOfInterest, scores.getOrDefault(pointOfInterest, 0) + priority);
             });
         });
 
-        List<Map.Entry<PointOfInterest, Integer>> collect = scores.entrySet().stream()
-                .sorted(Comparator.comparingInt(Map.Entry::getValue))
-                .collect(Collectors.toList());
-
-        int bestScore = collect.get(collect.size() - 1).getValue();
-        return collect.stream()
+        // Pick only those with the highest scores
+        int bestScore = Collections.max(scores.values());
+        return scores.entrySet().stream()
                 .filter(entry -> entry.getValue() == bestScore)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Find points such that at least one criteria matches.
+     * @param criterias a list of SearchCriteria
+     * @return a list of points of interest where each matches at least one criteria
+     */
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
         return this.pointsOfInterest.stream()

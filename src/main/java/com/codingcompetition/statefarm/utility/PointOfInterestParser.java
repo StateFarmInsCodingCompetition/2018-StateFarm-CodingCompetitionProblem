@@ -68,9 +68,9 @@ public class PointOfInterestParser {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(true);
         SAXParser saxParser = factory.newSAXParser();
-        saxParser.parse(this.getClass().getResourceAsStream(fileName), saxHandler);
+        saxParser.parse(this.getClass().getResourceAsStream(fileName), this.saxHandler);
 
-        return new ArrayList<>(objects);
+        return new ArrayList<>(this.objects);
     }
 
 }

@@ -3,6 +3,10 @@ package com.codingcompetition.statefarm.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A point of interest represents a physical location with a latitude,
+ * longitude, and
+ */
 public class PointOfInterest {
 
     /**
@@ -36,7 +40,7 @@ public class PointOfInterest {
      * @return the list of descriptors
      */
     public Map<Object,String> getDescriptors() {
-        return descriptors;
+        return this.descriptors;
     }
 
     /**
@@ -44,7 +48,7 @@ public class PointOfInterest {
      * @return the latitude
      */
     public String getLatitude() {
-        return latitude;
+        return this.latitude;
     }
 
     /**
@@ -52,6 +56,6 @@ public class PointOfInterest {
      * @return the longitude
      */
     public String getLongitude() {
-        return longitude;
+        return this.longitude;
     }
 }
