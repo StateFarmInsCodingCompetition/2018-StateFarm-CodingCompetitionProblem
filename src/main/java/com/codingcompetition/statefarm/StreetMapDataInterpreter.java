@@ -38,31 +38,44 @@ public class StreetMapDataInterpreter implements Interpreter {
         } else {
             Category cat = criteria.getCategory();
             String value = criteria.getValue();
-            found = points.stream().filter(p -> p.getDescriptors().containsKey(cat.toString().toLowerCase()) && p.getDescriptors().containsValue(value)).collect(Collectors.toList());
-            return found;
+            switch(cat) {
+                case NAMESTARTSWITH:
+                    points = points.stream().filter(p -> p != null && p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").matches("^" + value + ".*")).collect(Collectors.toList());
+                    break;
+                case NAMEENDSWITH:
+                    points = points.stream().filter(p -> p != null && p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").matches(".*" + value +"$")).collect(Collectors.toList());
+                    break;
+                default:
+                    points = points.stream().filter(p -> p != null && p.getDescriptors().containsKey(cat.toString().toLowerCase())
+                            && p.getDescriptors().containsValue(value)).collect(Collectors.toList());
+                    break;
+            }
+            return points;
         }
     }
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        List<PointOfInterest> found = new ArrayList<>();
-        HashSet<PointOfInterest> alreadyFound = new HashSet<>();
         if (prioritizedCriteria == null) {
-            return found;
+            return new ArrayList<>();
         } else {
             Map<Integer, SearchCriteria> treeMap = new TreeMap<>(prioritizedCriteria);
             List<SearchCriteria> sortedCriteria = new ArrayList<>(treeMap.values());
             for (SearchCriteria criteria : sortedCriteria) {
                 Category cat = criteria.getCategory();
                 String value = criteria.getValue();
-                points = points.stream().filter(p -> !alreadyFound.contains(p) && p.getDescriptors().containsKey(cat.toString().toLowerCase())
+                switch(cat) {
+                    case NAMESTARTSWITH:
+                        points = points.stream().filter(p -> p != null && p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").matches("^" + value + ".*")).collect(Collectors.toList());
+                        break;
+                    case NAMEENDSWITH:
+                        points = points.stream().filter(p -> p != null && p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").matches(".*" + value +"$")).collect(Collectors.toList());
+                        break;
+                    default:
+                        points = points.stream().filter(p -> p != null && p.getDescriptors().containsKey(cat.toString().toLowerCase())
                         && p.getDescriptors().containsValue(value)).collect(Collectors.toList());
-                // for (PointOfInterest p : all) {
-                // 	for (String s : p.getDescriptors().values()) {
-                // 		System.out.print(s + " ");
-                // 	}
-                // 	System.out.println();
-                // }
+                        break;
+                }
             }
             return points;
         }
@@ -78,18 +91,23 @@ public class StreetMapDataInterpreter implements Interpreter {
             for (SearchCriteria criteria : criterias) {
                 Category cat = criteria.getCategory();
                 String value = criteria.getValue();
-                List<PointOfInterest> all = points.stream().filter(p -> !alreadyFound.contains(p) && p.getDescriptors().containsKey(cat.toString().toLowerCase())
-                        && p.getDescriptors().containsValue(value)).collect(Collectors.toList());
-                for (PointOfInterest p : all) {
-                	for (String s : p.getDescriptors().values()) {
-                		System.out.print(s + " ");
-                	}
-                	System.out.println();
+                List<PointOfInterest> all;
+                switch(cat) {
+                    case NAMESTARTSWITH:
+                        all = points.stream().filter(p -> p != null && !alreadyFound.contains(p) && p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").matches("^" + value + ".*")).collect(Collectors.toList());
+                        break;
+                    case NAMEENDSWITH:
+                        all = points.stream().filter(p -> p != null && !alreadyFound.contains(p) && p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").matches(".*" + value +"$")).collect(Collectors.toList());
+                        break;
+                    default:
+                        all = points.stream().filter(p -> p != null && !alreadyFound.contains(p) && p.getDescriptors().containsKey(cat.toString().toLowerCase())
+                                && p.getDescriptors().containsValue(value)).collect(Collectors.toList());
+                        break;
                 }
                 found.addAll(all);
                 alreadyFound.addAll(all);
+                }
             }
             return found;
         }
     }
-}
