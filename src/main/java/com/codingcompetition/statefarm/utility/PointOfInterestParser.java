@@ -4,11 +4,11 @@ import com.codingcompetition.statefarm.model.PointOfInterest;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.swing.text.html.parser.Parser;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
-import java.util.Scanner;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -24,39 +24,17 @@ public class PointOfInterestParser {
 
 
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
-        File mFile = new File(fileName);
-        SAXParser sP = new SAXParser() {
-            @Override
-            public Parser getParser() throws SAXException {
-                return null;
-            }
+        try {
+            File xmlFile = new File(fileName);
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
+            DefaultHandler handler = new DefaultHandler();
+            parser.parse(xmlFile, handler);
+        } catch (ParserConfigurationException e) {
+            System.out.print(e.getMessage());
+        }
 
-            @Override
-            public XMLReader getXMLReader() throws SAXException {
-                return null;
-            }
-
-            @Override
-            public boolean isNamespaceAware() {
-                return false;
-            }
-
-            @Override
-            public boolean isValidating() {
-                return false;
-            }
-
-            @Override
-            public void setProperty(String name, Object value) throws SAXNotRecognizedException, SAXNotSupportedException {
-
-            }
-
-            @Override
-            public Object getProperty(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
-                return null;
-            }
-        };
-        return null;
+        return new ArrayList<>();
     }
 
 }
