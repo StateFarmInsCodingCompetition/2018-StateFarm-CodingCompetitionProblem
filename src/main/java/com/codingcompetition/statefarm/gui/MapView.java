@@ -67,7 +67,7 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 				double lonPercent = (Double.parseDouble(point.getLongitude()) - minLon) / (maxLon - minLon);
 				int xLoc = (int) (this.getWidth() * latPercent);
 				int yLoc = (int) (this.getHeight() * (1 - lonPercent));
-				g.drawImage(marker, xLoc - marker.getWidth() / 2, yLoc - marker.getHeight(), marker.getWidth(), marker.getHeight(), null);
+				g.drawImage(marker, xLoc - marker.getWidth() / 2, yLoc - marker.getHeight(), 15, 20, null);
 			}
 		}
 	}
@@ -81,6 +81,8 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 		synchronized (filteredPointsLock) {
 			this.filteredPoints = this.interpreter.interpret(priorityMap);	
 		}
+		System.out.println("Updated " + criteria.size());
+		this.repaint();
 	}
 	
 	private File loadRes(String name) {
