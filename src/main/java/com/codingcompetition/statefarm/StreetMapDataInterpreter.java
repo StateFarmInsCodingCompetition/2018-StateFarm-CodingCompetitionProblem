@@ -10,14 +10,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Interprets the street map data from an XML file in various ways.
+ */
 public class StreetMapDataInterpreter implements Interpreter {
 
     // A list containing the points of interest
     private List<PointOfInterest> pointsOfInterest;
 
     /**
-     * Parses and interprets street map data from an XML file.
-     * @param fileName the name of the XML file
+     * Parses and interprets street map data from an XML file within the classpath.
+     * @param fileName the path to the XML file within the classpath
      */
     public StreetMapDataInterpreter(String fileName) throws ParserConfigurationException, SAXException, IOException {
         PointOfInterestParser parser = new PointOfInterestParser();
