@@ -1,6 +1,10 @@
 package com.codingcompetition.statefarm.gui;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +20,7 @@ import com.codingcompetition.statefarm.StreetMapDataInterpreter;
 import com.codingcompetition.statefarm.gui.MainPanel.SearchCriteriaListener;
 import com.codingcompetition.statefarm.model.PointOfInterest;
 
-public class MapView extends JPanel implements SearchCriteriaListener {
+public class MapView extends JPanel implements SearchCriteriaListener, MouseMotionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,10 +36,15 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 	
 	private double minLat, minLon, maxLat, maxLon;
 	
+	private Point mse;
+	
+	private volatile PointOfInterest selected;
+	
 	public MapView(StreetMapDataInterpreter interpreter) {
 		this.interpreter = interpreter;
 		this.filteredPointsLock = new Object();
 		this.filteredPoints = this.interpreter.interpret();
+		this.mse = new Point(0, 0);
 		
 		try {
 			marker = ImageIO.read(loadRes("/marker.png"));
@@ -55,6 +64,8 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 		minLon = interpreter.getParser().getMinLong();
 		maxLat = interpreter.getParser().getMaxLat();
 		maxLon = interpreter.getParser().getMaxLong();
+		
+		this.addMouseMotionListener(this);
 	}
 	
 	@Override
@@ -71,14 +82,34 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 				markerWidth = 5;
 			}
 			markerHeight = (int) (marker.getHeight() * 1.0 / marker.getWidth() * markerWidth);
+			
+			PointOfInterest selected = null;
 				
 			for (PointOfInterest point : filteredPoints) {
 				double latPercent = (Double.parseDouble(point.getLatitude()) - minLat) / (maxLat - minLat);
 				double lonPercent = (Double.parseDouble(point.getLongitude()) - minLon) / (maxLon - minLon);
 				int xLoc = (int) (this.getWidth() * latPercent);
 				int yLoc = (int) (this.getHeight() * (1 - lonPercent));
-				g.drawImage(marker, xLoc - markerWidth / 2, yLoc - markerHeight, markerWidth, markerHeight, null);
+				
+				if (selected == null && mse.x >= xLoc - markerWidth / 2 && mse.y >= yLoc - markerHeight && mse.x < xLoc + markerWidth / 2 && mse.y < yLoc) {
+					selected = point;
+					
+				} else {
+					g.drawImage(marker, xLoc - markerWidth / 2, yLoc - markerHeight, markerWidth, markerHeight, null);
+				}
 			}
+			
+			// Draw selected one last
+			if (selected != null) {
+				double latPercent = (Double.parseDouble(selected.getLatitude()) - minLat) / (maxLat - minLat);
+				double lonPercent = (Double.parseDouble(selected.getLongitude()) - minLon) / (maxLon - minLon);
+				int xLoc = (int) (this.getWidth() * latPercent);
+				int yLoc = (int) (this.getHeight() * (1 - lonPercent));
+				int mw = 40;
+				int mh = (int) (marker.getHeight() * 1.0 / marker.getWidth() * mw);
+				g.drawImage(marker, xLoc - mw / 2, yLoc - mh, mw, mh, null);
+			}
+			this.selected = selected;
 		}
 	}
 
@@ -96,5 +127,36 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 	
 	private File loadRes(String name) {
 		return new File(MapView.class.getResource(name).getFile());
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		this.mse = new Point(e.getX(), e.getY());
+		this.repaint();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 	}
 }
