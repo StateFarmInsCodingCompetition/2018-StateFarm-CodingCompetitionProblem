@@ -3,13 +3,19 @@ package com.codingcompetition.statefarm.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.codingcompetition.statefarm.Category;
+
 public class PointOfInterest {
 
 	private String latitude;
 	private String longtitude;
+	private HashMap<String, String> descriptors;
 
-    public Map<Object,String> getDescriptors() {
-    return new HashMap<>();
+	public PointOfInterest() {
+		descriptors = new HashMap<>();
+	}
+    public Map<String,String> getDescriptors() {
+    	return this.descriptors;
     }
 
     public String getLatitude() {
