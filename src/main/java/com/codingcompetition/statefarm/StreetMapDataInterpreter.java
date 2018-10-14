@@ -13,6 +13,10 @@ public class StreetMapDataInterpreter implements Interpreter {
     private PointOfInterestParser POIParser = new PointOfInterestParser();
     private List<PointOfInterest> POIs;
 
+    /**
+     * construct a StreetMapDataInterpreter from PointOfInterestParser
+     * @param s filename to be parsed to the PointOfInterestParser
+     */
     public StreetMapDataInterpreter(String s) throws IOException, SAXException {
         this.POIs = this.POIParser.parse(s);
     }
@@ -27,6 +31,12 @@ public class StreetMapDataInterpreter implements Interpreter {
         return interpret(criteria, this.POIs);
     }
 
+    /**
+     * Interpret a given criteria within the given list of PointOfInterest
+     * @Param criteria  the search criteria
+     * @Param POIs  the list of PointOfInterest to search from
+     * @return list of PointOfInterest if the criteria is valid (in the Category Enum class), null otherwise
+     */
     private List<PointOfInterest> interpret(SearchCriteria criteria, List<PointOfInterest> POIs ) {
         String criteriaString = CriteriaToString(criteria);
         if (!criteriaString.equals("")) {
@@ -70,6 +80,11 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     }
 
+    /**
+     * order the key of prioritizedCriteria based in increasing numeric order and return as a list of integers
+     * @param prioritizedCriteria   a map of criteria with priority
+     * @return list of keys in increasing numeric order
+     */
     private List<Integer> priorityList(Map<Integer, SearchCriteria> prioritizedCriteria) {
         List<Integer> priorityList = new ArrayList<>();
         for (Integer priority : prioritizedCriteria.keySet()) {
@@ -80,7 +95,12 @@ public class StreetMapDataInterpreter implements Interpreter {
     }
 
 
-
+    /**
+     * find the matched PointOfInterest based on the given criteria in criteriaMap from the given list of PointOfInterests
+     * @param criteriaMap   a map of criteria category and criteria value
+     * @param POIs  list of PointOfInterest to be searched from
+     * @return list of PointOfInterests if satisfy any of the criteria (no duplicate)
+     */
     private List<PointOfInterest> findByCriterias(Map<String, String> criteriaMap, List<PointOfInterest> POIs) {
         List<PointOfInterest> result = new ArrayList<>();
         Set<String> POIId = new HashSet<>();
@@ -105,7 +125,12 @@ public class StreetMapDataInterpreter implements Interpreter {
         return result;
     }
 
-
+    /**
+     * get the list of PointOfInterests with the specified starting name
+     * @param POIs  list of PointOfInterest to be searched from
+     * @param value String representation of the start of the name
+     * @return list of PointOfInterests if the name start with given value within the given POIs
+     */
     private List<PointOfInterest> findNameStart(String value, List<PointOfInterest> POIs) {
         List<PointOfInterest> result = new ArrayList<>();
         Set<String> POIId = new HashSet<>();
@@ -137,7 +162,12 @@ public class StreetMapDataInterpreter implements Interpreter {
         return result;
     }
 
-
+    /**
+     * get the list of PointOfInterests with the specified ending name
+     * @param POIs  list of PointOfInterest to be searched from
+     * @param value String representation of the end of the name
+     * @return list of PointOfInterests if the name end with given value within the given POIs
+     */
     private List<PointOfInterest> findNameEnd(String value, List<PointOfInterest> POIs) {
         List<PointOfInterest> result = new ArrayList<>();
         Set<String> POIId = new HashSet<>();
@@ -169,7 +199,12 @@ public class StreetMapDataInterpreter implements Interpreter {
         return result;
     }
 
-
+    /**
+     * @param key   String representation of the tag key
+     * @param value String representation of the tag value
+     * @param POIs  list of PointOfInterest to be searched from
+     * @return list of PointOfInterests if the key and value matches with its descriptor within the given POIs
+     */
     private List<PointOfInterest> findByTag(String key, String value, List<PointOfInterest> POIs) {
         List<PointOfInterest> result = new ArrayList<>();
         Set<String> POIId = new HashSet<>();
@@ -181,7 +216,11 @@ public class StreetMapDataInterpreter implements Interpreter {
         }
         return result;
     }
-
+    /**
+     * map the criteria category to string
+     * @param criteria  a search criteria
+     * @return string representation of the category of criteria
+     */
     private String CriteriaToString(SearchCriteria criteria) {
         if(criteria.getCategory() == Category.AMENITY) {
             return "amenity";
