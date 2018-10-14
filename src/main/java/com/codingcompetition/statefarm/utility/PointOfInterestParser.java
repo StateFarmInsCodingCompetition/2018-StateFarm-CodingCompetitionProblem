@@ -24,17 +24,23 @@ public class PointOfInterestParser {
 
 
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
-        try {
-            File xmlFile = new File(fileName);
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
-            DefaultHandler handler = new DefaultHandler();
-            parser.parse(xmlFile, handler);
-        } catch (ParserConfigurationException e) {
-            System.out.print(e.getMessage());
-        }
-
-        return new ArrayList<>();
+        ArrayList<PointOfInterest> list = new ArrayList<>();
+        InputStream inputStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                try {
+                    File xmlFile = new File(fileName);
+                    SAXParserFactory factory = SAXParserFactory.newInstance();
+                    SAXParser parser = factory.newSAXParser();
+                    DefaultHandler handler = new DefaultHandler();
+                    parser.parse(xmlFile, handler);
+                } catch (ParserConfigurationException | SAXException e) {
+                    System.out.print(e.getMessage());
+                }
+                return 0;
+            }
+        };
+        return list;
     }
 
 }

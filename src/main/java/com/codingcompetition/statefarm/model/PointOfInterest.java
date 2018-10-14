@@ -11,6 +11,11 @@ public class PointOfInterest {
     private String latitude;
     private String longitude;
 
+    public PointOfInterest(String latitude, String longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Map<Category, String> getDescriptors() {
         return descriptors;
     }
