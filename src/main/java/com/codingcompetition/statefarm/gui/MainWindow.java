@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle bounds = new Rectangle(screen.width / 2 - WINDOW_BOUNDS.width / 2, screen.height / 2 - WINDOW_BOUNDS.height / 2, WINDOW_BOUNDS.width, WINDOW_BOUNDS.height);
 		this.setBounds(bounds);
-		this.setContentPane(new MainPanel());
+		this.setContentPane(new MainPanel(interpreter));
 		this.setResizable(false);
 	}
 	

@@ -3,6 +3,7 @@ package com.codingcompetition.statefarm.gui;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JPanel;
 
 import com.codingcompetition.statefarm.SearchCriteria;
@@ -14,6 +15,7 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 	
 	public ListPanel(String title) {
 		this.setBorder(BorderFactory.createTitledBorder(title));
+		this.add(Box.createHorizontalStrut(200));
 	}
 
 	@Override

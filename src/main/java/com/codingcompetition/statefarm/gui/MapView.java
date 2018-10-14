@@ -38,11 +38,11 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 		this.filteredPoints = this.interpreter.interpret();
 		
 		try {
-			marker = ImageIO.read(loadRes("marker.png"));
+			marker = ImageIO.read(loadRes("/marker.png"));
 			
 			if (interpreter.getParser().getFileName().contains("small-metro")) {
 				// Bloomington
-				background = ImageIO.read(loadRes("map_bloomington.png"));
+				background = ImageIO.read(loadRes("/map_bloomington.png"));
 			} else {
 				// Chicago
 			}
