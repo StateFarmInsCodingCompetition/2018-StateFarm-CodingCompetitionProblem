@@ -17,10 +17,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A class that parses point of interest information from an OpenStreetMap XML file
+ * @author Jeremy Schonfeld and Robert Pooley
+ */
 public class PointOfInterestParser {
 
 
+	/**
+	 * Parses an OpenStreetMap XML file into a list of POIs
+	 * @param fileName The name of the XML file to parse
+	 * @return A list of all points of interest contained in the XML file
+	 * @throws IOException if there is an issue opening/reading the file
+	 * @throws SAXException if there is an issue parsing the XML content of the file
+	 */
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
+    	if (fileName == null) {
+    		throw new IllegalArgumentException("fileName cannot be null!");
+    	}
+    	
     	// Open and parse the file into a Document Object
     	Document document = null;
     	try {
@@ -44,8 +59,12 @@ public class PointOfInterestParser {
     		
     		// Store the lattitude and longitude attributes
     		NamedNodeMap attr = node.getAttributes();
-    		String lat = attr.getNamedItem("lat").getNodeValue();
-    		String lon = attr.getNamedItem("lon").getNodeValue();
+    		Node latNode = attr.getNamedItem("lat"), lonNode = attr.getNamedItem("lon");
+    		String lat = null, lon = null;
+    		if (latNode != null && lonNode != null) {
+    			lat = latNode.getNodeValue();
+    			lon = lonNode.getNodeValue();
+    		}
     		
     		// Store all <tag> elements as descriptors
     		Map<Object, String> descriptors = new HashMap<Object, String>();
