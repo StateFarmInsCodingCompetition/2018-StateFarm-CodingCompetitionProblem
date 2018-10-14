@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -44,7 +45,9 @@ public class MapView extends JPanel implements SearchCriteriaListener, MouseMoti
 	public MapView(StreetMapDataInterpreter interpreter) {
 		this.interpreter = interpreter;
 		this.filteredPointsLock = new Object();
-		this.filteredPoints = this.interpreter.interpret();
+		this.filteredPoints = this.interpreter.interpret().stream().filter(poi -> {
+			return poi.getDescriptors().get("name") != null;
+		}).collect(Collectors.toList());
 		this.mse = new Point(0, 0);
 		
 		try {
@@ -122,7 +125,9 @@ public class MapView extends JPanel implements SearchCriteriaListener, MouseMoti
 			priorityMap.put(i, criteria.get(i));
 		}
 		synchronized (filteredPointsLock) {
-			this.filteredPoints = this.interpreter.interpret(priorityMap);	
+			this.filteredPoints = this.interpreter.interpret(priorityMap).stream().filter(poi -> {
+				return poi.getDescriptors().get("name") != null;
+			}).collect(Collectors.toList());	
 		}
 		this.repaint();
 	}
