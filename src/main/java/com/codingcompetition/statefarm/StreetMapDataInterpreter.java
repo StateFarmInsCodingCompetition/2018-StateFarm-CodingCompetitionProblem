@@ -39,7 +39,8 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        return null;
+
+        return dataList;
     }
 
     @Override
