@@ -13,6 +13,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StreetMapDataInterpreter implements Interpreter {
+    private static final String NAME_STARTS_WITH = Category.NAMESTARTSWITH.toString().toLowerCase();
+    private static final String NAME_ENDS_WITH = Category.NAMEENDSWITH.toString().toLowerCase();
+    private static final String NAME = Category.NAME.toString().toLowerCase();
+
     private List<PointOfInterest> poiList;
 
     public StreetMapDataInterpreter(String fileName) {
@@ -54,8 +58,9 @@ public class StreetMapDataInterpreter implements Interpreter {
 
         for (PointOfInterest curPoi : poiList) {
             Map<Object, String> desMap = curPoi.getDescriptors();
+
             for (SearchCriteria criteria : criterias) {
-                if (desMap.containsKey(criteria.getCategory()) && desMap.get(criteria.getCategory()).equals(criteria.getValue())) {
+                if (isCriteriaSatisfy(criteria, desMap)) {
                     res.add(curPoi);
                     break;
                 }
@@ -63,5 +68,17 @@ public class StreetMapDataInterpreter implements Interpreter {
         }
 
         return res;
+    }
+
+    private boolean isCriteriaSatisfy(SearchCriteria criteria, Map<Object, String> desMap) {
+        if (criteria.getCategory().equals(NAME_STARTS_WITH) && desMap.containsKey(NAME) && desMap.get(NAME).startsWith(criteria.getValue())) {
+            return true;
+        }
+
+        if (criteria.getCategory().equals(NAME_ENDS_WITH) && desMap.containsKey(NAME) && desMap.get(NAME).endsWith(criteria.getValue())) {
+            return true;
+        }
+
+        return desMap.containsKey(criteria.getCategory()) && desMap.get(criteria.getCategory()).equals(criteria.getValue());
     }
 }
