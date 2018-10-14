@@ -27,7 +27,9 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-        return null;
+    	return pois.stream().filter(
+    		t -> t.getDescriptors().get(criteria.cat).equals(criteria.value)
+        ).collect(Collectors.toList());
     }
 
     @Override
