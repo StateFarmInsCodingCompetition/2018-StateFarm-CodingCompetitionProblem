@@ -21,13 +21,18 @@ public class StreetMapDataInterpreter implements Interpreter {
 
 	/** A list of all points of interest found in the provided file */
 	private List<PointOfInterest> interestList;
+	
+	/** The parser instance */
+	private PointOfInterestParser parser;
 
 	/**
 	 * @param fileName The file to parse
 	 */
     public StreetMapDataInterpreter(String fileName) {
+    	this.parser = new PointOfInterestParser();
+    	
     	try {
-			interestList = new PointOfInterestParser().parse(fileName);
+			interestList = this.parser.parse(fileName);
 		} catch (IOException | SAXException e) {
 			e.printStackTrace();
 		}
@@ -38,7 +43,7 @@ public class StreetMapDataInterpreter implements Interpreter {
      */
     @Override
     public List<PointOfInterest> interpret() {
-        return interestList;
+        return new ArrayList<>(interestList);
     }
 
     /**
@@ -89,5 +94,12 @@ public class StreetMapDataInterpreter implements Interpreter {
         			return false;
         		})
         		.collect(Collectors.toList());
+    }
+    
+    /**
+     * @return The parser
+     */
+    public PointOfInterestParser getParser() {
+    	return parser;
     }
 }
