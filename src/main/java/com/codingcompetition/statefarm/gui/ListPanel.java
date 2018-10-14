@@ -1,5 +1,6 @@
 package com.codingcompetition.statefarm.gui;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -25,6 +28,7 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 	
 	private JTable table;
 	private OSMTableModel tableModel;
+	private JLabel unnamedLabel;
 	
 	private StreetMapDataInterpreter interpreter;
 	
@@ -32,11 +36,17 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 		this.interpreter = interpreter;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createTitledBorder(title));
-		this.add(Box.createHorizontalStrut(200));
-		
 		tableModel = new OSMTableModel();
 		tableModel.setPOI(new LinkedList<>());
 		table = new JTable(tableModel);
+		JScrollPane scroll = new JScrollPane(table);
+		this.add(scroll);
+		
+		unnamedLabel = new JLabel("");
+		this.add(unnamedLabel);
+		
+
+		this.onSearchCriteriaChange(new LinkedList<>());
 	}
 
 	@Override
@@ -45,7 +55,21 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 		for (int i = 0; i < criteria.size(); i++) {
 			prioMap.put(i, criteria.get(i));
 		}
-		tableModel.setPOI(interpreter.interpret(prioMap));
+		List<PointOfInterest> poi = interpreter.interpret(prioMap);
+		int unnamed = 0;
+		for (int i = 0; i < poi.size(); i++) {
+			if (poi.get(i).getDescriptors().get("name") == null) {
+				unnamed++;
+				poi.remove(i);
+				i--;
+			}
+		}
+		if (unnamed > 0) {
+			unnamedLabel.setText("Not listing " + unnamed + " unnamed POIs");
+		} else {
+			unnamedLabel.setText("");
+		}
+		tableModel.setPOI(poi);
 	}
 	
 	private class OSMTableModel extends DefaultTableModel {
@@ -53,6 +77,9 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 		
 		public void setPOI(List<PointOfInterest> poi) {
 			this.poi = poi;
+			this.fireTableDataChanged();
+			this.setRowCount(0);
+			this.setRowCount(poi.size());
 		}
 
 		@Override
@@ -82,7 +109,8 @@ public class ListPanel extends JPanel implements SearchCriteriaListener {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			return poi.get(rowIndex).getDescriptors().get("name");
+			String name = poi.get(rowIndex).getDescriptors().get("name");
+			return name == null ? "(unnamed)" : name;
 		}
 		
 	}

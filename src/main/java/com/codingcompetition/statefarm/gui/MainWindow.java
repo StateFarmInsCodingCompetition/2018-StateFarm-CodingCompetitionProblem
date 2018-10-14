@@ -11,7 +11,7 @@ import com.codingcompetition.statefarm.StreetMapDataInterpreter;
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = -5880550599073357438L;
 	
-	private static final Dimension WINDOW_BOUNDS = new Dimension(1000, 750);
+	private static final Dimension WINDOW_BOUNDS = new Dimension(1500, 750);
 
 	public MainWindow(StreetMapDataInterpreter interpreter) {
 		super("OpenStreetMap Data Viewer");
