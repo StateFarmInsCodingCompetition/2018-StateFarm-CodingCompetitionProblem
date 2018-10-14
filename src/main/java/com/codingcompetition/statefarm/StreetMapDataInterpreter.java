@@ -46,7 +46,6 @@ public class StreetMapDataInterpreter implements Interpreter {
         }
         for (int i = 0; i < interpretedData.size(); i++) {
             Map<Object, String> descriptors = interpretedData.get(i).getDescriptors();
-            System.out.println(descriptors.get(criteria.getCategory()));
             int criteriaStringLength = criteria.getVal().length();
             if (criteria.getCategory().equals(Category.NAMESTARTSWITH)) {
                 if (descriptors.get("name") != null && descriptors.get("name").substring(0, criteriaStringLength).equals(criteria.getVal())) {

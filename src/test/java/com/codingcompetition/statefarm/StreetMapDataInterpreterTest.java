@@ -23,7 +23,7 @@ public class StreetMapDataInterpreterTest {
     @Before
     public void setup() throws Exception {
         smallMetro = new StreetMapDataInterpreter("/small-metro.xml");
-        //largeMetro = new StreetMapDataInterpreter("/large-metro.xml");
+        //1largeMetro = new StreetMapDataInterpreter("/large-metro.xml");
     }
 
     @Test
