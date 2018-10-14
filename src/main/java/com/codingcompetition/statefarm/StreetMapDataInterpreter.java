@@ -10,22 +10,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StreetMapDataInterpreter implements Interpreter {
 
+    private List<PointOfInterest> pointsOfInterest;
 
-    public StreetMapDataInterpreter(String filePath) {
-
+    public StreetMapDataInterpreter(String fileName) throws ParserConfigurationException, SAXException, IOException {
+        PointOfInterestParser parser = new PointOfInterestParser();
+        this.pointsOfInterest = parser.parse(fileName);
     }
 
     @Override
     public List<PointOfInterest> interpret() {
-        return null;
+        return this.pointsOfInterest;
     }
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-        return null;
+        return pointsOfInterest.stream().filter(criteria::test).collect(Collectors.toList());
     }
 
     @Override
@@ -35,6 +38,12 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-        return null;
+        Stream<PointOfInterest> stream = this.pointsOfInterest.stream();
+        
+        for (SearchCriteria criteria : criterias) {
+            stream = stream.filter(criteria::test);
+        }
+
+        return stream.collect(Collectors.toList());
     }
 }
