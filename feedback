@@ -5,6 +5,7 @@ Document and describe any enhancements included to help the judges properly grad
 	Step 1: Javadocs were added to all methods utilized by the tests.
 	Step 2: A command line interface was added to test the interpret() and interpret(SearchCriteria) methods of the StreetMapDataInterpreter.
 			It can be accessed by compiling and running DataSearch.java. No command line arguments are required; the instructions are in the program.
+			Additionally, it can be accessed by running codingcompetition.jar, with the command "java -jar codingcompetition.jar".
 	
 	
 Feedback for the coding competition?  Things you would like to see in future events?
