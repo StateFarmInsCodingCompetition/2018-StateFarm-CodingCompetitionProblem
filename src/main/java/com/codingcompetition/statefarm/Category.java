@@ -30,6 +30,12 @@ public enum Category implements BiFunction<PointOfInterest, String, Boolean> {
         this.key = key;
     }
 
+    /**
+     * Check if a point of interest and target value match this category.
+     * @param pointOfInterest the point of interest to apply the filter on
+     * @param value the value of the filter target
+     * @return a boolean which is true if the filter matches, and false otherwise
+     */
     @Override
     public Boolean apply(PointOfInterest pointOfInterest, String value) {
         MatchingStrategy matchingStrategy = EXACT_MATCH;
