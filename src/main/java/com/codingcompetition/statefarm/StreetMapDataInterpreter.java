@@ -35,7 +35,9 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        return null;
+        return this.pointsOfInterest.stream()
+                .filter(poi -> prioritizedCriteria.values().stream().allMatch(criteria -> criteria.test(poi)))
+                .collect(Collectors.toList());
     }
 
     @Override
