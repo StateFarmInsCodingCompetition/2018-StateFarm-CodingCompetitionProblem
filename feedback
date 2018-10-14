@@ -1,9 +1,13 @@
-Your team (name of each individual participating):
-How many JUnits were you able to get to pass? 
+Your team (name of each individual participating): Neil Thistlethwaite, Jerry Huang.
+How many JUnits were you able to get to pass? All 17.
 
 Document and describe any enhancements included to help the judges properly grade your submission.
-	Step 1:
-	Step 2: 
+	Step 1: SearchCriteria supports MatchingStrategy as an optional argument, which can be used with
+	any category, not just name.
 	
 	
 Feedback for the coding competition?  Things you would like to see in future events?
+
+Overall the competition was enjoyable and well-structured; we would have liked to see more tasks to
+complete, as we felt that we had easily enough time to do all the provided ones, but not quite enough
+time to develop a whole GUI, leaving us only implementing one minor enhancement.
