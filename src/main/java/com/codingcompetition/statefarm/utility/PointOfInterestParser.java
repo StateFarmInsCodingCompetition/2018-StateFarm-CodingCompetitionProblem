@@ -40,6 +40,22 @@ public class PointOfInterestParser {
                 poi = new PointOfInterest();
                 poi.setLatitude(lati);
                 poi.setLongitude(longi);
+
+                ArrayList<String> otherAttributes = new ArrayList<String>();
+                otherAttributes.add("version");
+                otherAttributes.add("timestamp");
+                otherAttributes.add("changeset");
+                otherAttributes.add("uid");
+                otherAttributes.add("user");
+                for (String s : otherAttributes) {
+                    try {
+                        poi.addToDesc(s, attributes.getValue(s));
+                    } catch (Exception e) {
+                        //System.out.println(s);
+                    }
+                }
+
+
                 if (poiList == null) {
                     poiList = new ArrayList<PointOfInterest>();
                 }
@@ -132,12 +148,14 @@ public class PointOfInterestParser {
         return poiList;
     }
 
-    /*
+    
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         PointOfInterestParser parser = new PointOfInterestParser();
         List<PointOfInterest> interpretedData = parser.parse("/small-metro.xml");
-        System.out.println(interpretedData.size());
+        System.out.println("interpreted");
+        System.out.println(interpretedData.get(0));
+        //System.out.println(interpretedData.size());
     }
-    */
+    
 
 }

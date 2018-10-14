@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "java-coding-competition",
+                "projectName": "java-coding-competition",
+                "workingDirectory": "c:\\Users\\jonat\\Desktop\\state-farm\\2018-StateFarm-CodingCompetitionProblem",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "java-coding-competition",
+                "projectName": "java-coding-competition",
+                "workingDirectory": "c:\\Users\\jonat\\Desktop\\state-farm\\2018-StateFarm-CodingCompetitionProblem",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

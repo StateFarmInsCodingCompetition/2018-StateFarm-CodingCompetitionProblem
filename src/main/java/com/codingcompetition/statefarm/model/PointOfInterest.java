@@ -34,7 +34,12 @@ public class PointOfInterest {
     }
 
     public String toString() {
-        return "latitude: " + latitude + " longitude: " + longitude;
+        String descStr = "";
+        for (Object key: descriptors.keySet()) {
+            System.out.println(key);
+            descStr += " " + key + ": " + descriptors.get(key.hashCode()) + " -- ";
+        }
+        return "latitude: " + latitude + " longitude: " + longitude + descStr;
     }
 
 }
