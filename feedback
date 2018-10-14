@@ -3,7 +3,21 @@ How many JUnits were you able to get to pass? All of them (16)
 
 Document and describe any enhancements included to help the judges properly grade your submission.
 	I slightly modified the api to use a SearchPredicate interface and added default methods in it in order
-	to do logical operations of the queries. That way, you can to more complex searches of nodes. However, I didn't make a frontend for it sadly :(
+	to do logical operations of the queries. That way, you can to more complex searches of nodes.
 	
+	Furthermore, I made a small cli program for doing these queries. I don't really have thaaaat much time to explain, but basically,
+	you enter a query where
+	
+	"category"="value" matches locations where that SearchCriteria would match
+	"category"!="value" matches locations where that SearchCriteria does not match
+	
+	and("category1"="value1" "category2"="value2") requires both must be true
+	or("category1"="value1" "category2"="value2") requires at least one be true
+	
+	so or(namestartswith=wendy amenity=place_of_worship) matches a bunch of stuff but
+	and(namestartswith=wendy amenity=place_of_worship) matches nothing obviously (unless you worship frosties I guess)
+	
+	
+	And yes! these should nest (it's just that it might be buggy :/  )
 	
 Feedback for the coding competition?  Things you would like to see in future events?
