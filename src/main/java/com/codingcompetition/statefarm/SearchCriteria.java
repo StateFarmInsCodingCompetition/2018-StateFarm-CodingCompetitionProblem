@@ -8,7 +8,7 @@ public class SearchCriteria {
 	  this.category = cat;
 	  this.value = value;
 	}
-	
+
 	public Category getCategory() {
 	  return this.category;
   }

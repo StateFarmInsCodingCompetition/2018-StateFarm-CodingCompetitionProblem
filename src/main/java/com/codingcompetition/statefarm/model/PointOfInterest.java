@@ -10,6 +10,12 @@ public class PointOfInterest {
     private String longitude;
     private HashMap<Object, String> descriptors;
 
+    public PointOfInterest(String latitude, String longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.descriptors = new HashMap<>();
+    }
+
     public Map<Object, String> getDescriptors() {
         return descriptors;
     }
@@ -20,5 +26,9 @@ public class PointOfInterest {
 
     public String getLongitude() {
         return longitude;
+    }
+
+    public void addDescriptor(Category key, String value) {
+        this.descriptors.put(key, value);
     }
 }
