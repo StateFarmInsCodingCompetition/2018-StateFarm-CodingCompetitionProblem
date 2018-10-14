@@ -67,6 +67,7 @@ public class MapView extends JPanel implements SearchCriteriaListener, MouseMoti
 		maxLon = interpreter.getParser().getMaxLong();
 		
 		this.addMouseMotionListener(this);
+		this.addMouseListener(this);
 	}
 	
 	@Override
@@ -142,7 +143,6 @@ public class MapView extends JPanel implements SearchCriteriaListener, MouseMoti
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("clicked " + selected);
 		if (selected != null) {
 			String str = "";
 			for (Object key : selected.getDescriptors().keySet()) {
