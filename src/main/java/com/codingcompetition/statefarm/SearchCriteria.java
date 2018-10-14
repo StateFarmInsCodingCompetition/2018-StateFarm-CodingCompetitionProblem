@@ -28,9 +28,9 @@ public class SearchCriteria {
 		String name = descriptors.get("name");
 		switch (category) {
 		case NAMESTARTSWITH:
-			return name.startsWith(value);
+			return name != null && name.startsWith(value);
 		case NAMEENDSWITH:
-			return name.endsWith(value);
+			return name != null && name.endsWith(value);
 		default:
 			String key = category.name().toLowerCase();
 			if (!descriptors.containsKey(key)) {
