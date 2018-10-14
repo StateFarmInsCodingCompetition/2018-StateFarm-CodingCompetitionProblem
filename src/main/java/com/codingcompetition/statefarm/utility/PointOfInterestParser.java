@@ -1,5 +1,6 @@
 package com.codingcompetition.statefarm.utility;
 
+import com.codingcompetition.statefarm.StreetMapDataInterpreter;
 import com.codingcompetition.statefarm.model.PointOfInterest;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -16,14 +17,8 @@ import java.util.Stack;
 
 public class PointOfInterestParser {
 
-
-    // Stacks for storing the elements and objects.
-    private Stack<String> elements = new Stack<String>();
-    private Stack<PointOfInterest> objects = new Stack<PointOfInterest>();
-
-
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
-   return null;
+    	return new StreetMapDataInterpreter(fileName).interpret();
     }
 
 }
