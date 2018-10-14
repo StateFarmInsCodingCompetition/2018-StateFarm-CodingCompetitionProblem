@@ -39,9 +39,12 @@ public class StreetMapDataInterpreter implements Interpreter {
     	List<PointOfInterest> filterList = listPoints.stream()
     			.filter(point -> {
     				Map<String, String> description = point.getDescriptors();
-    				
-    				if (!description.containsKey(criteria.getCategory())
-    					|| !description.get(criteria.getCategory()).equals(criteria.getValue())) {
+    				if (criteria.getCategory().name().toLowerCase().equals("nameendswith")
+    					&& description.containsKey("name")) {
+    					
+    				}
+    				if (!description.containsKey(criteria.getCategory().name().toLowerCase())
+    					|| !description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
     					return false;
     				}
     				return true;
@@ -57,7 +60,7 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     	Set<PointOfInterest> filterSet = new TreeSet<>(listPoints.stream()
     			.filter(point -> {
-    				Map<Object, String> description = point.getDescriptors();
+    				Map<String, String> description = point.getDescriptors();
    
     				int numCriteria = prioritizedCriteria.size();
     				
@@ -65,8 +68,8 @@ public class StreetMapDataInterpreter implements Interpreter {
     					if (prioritizedCriteria.containsKey(i)) {
     						SearchCriteria criteria = prioritizedCriteria.get(i);
     						
-    						if (description.containsKey(criteria.getCategory())
-		    					&& description.get(criteria.getCategory()).equals(criteria.getValue())) {
+    						if (description.containsKey(criteria.getCategory().name().toLowerCase())
+		    					&& description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
 		    					return true;
     						}
     					}
@@ -75,14 +78,14 @@ public class StreetMapDataInterpreter implements Interpreter {
     			}).sorted(new java.util.Comparator<PointOfInterest>() {
     	    		@Override
     	    		public int compare(PointOfInterest a, PointOfInterest b) {
-    	    			Map<Object, String> descriptionA = a.getDescriptors();
-    	    			Map<Object, String> descriptionB = a.getDescriptors();
+    	    			Map<String, String> descriptionA = a.getDescriptors();
+    	    			Map<String, String> descriptionB = a.getDescriptors();
     	    			int numCriteria = prioritizedCriteria.size();
     	    			for (int i = 1; i <= numCriteria; i++) {
     						if (prioritizedCriteria.containsKey(i)) {
     							SearchCriteria criteria = prioritizedCriteria.get(i);
-    							boolean checkA = descriptionA.containsKey(criteria.getCategory());
-    							boolean checkB = descriptionB.containsKey(criteria.getCategory());
+    							boolean checkA = descriptionA.containsKey(criteria.getCategory().name().toLowerCase());
+    							boolean checkB = descriptionB.containsKey(criteria.getCategory().name().toLowerCase());
     							if ((checkA && checkB) || (!checkA && !checkB)) {
     		    					continue;
     							} else if (checkA) {
@@ -129,10 +132,10 @@ public class StreetMapDataInterpreter implements Interpreter {
     	}
     	List<PointOfInterest> filterList = listPoints.stream()
     			.filter(point -> {
-    				Map<Object, String> description = point.getDescriptors();
+    				Map<String, String> description = point.getDescriptors();
     				for (SearchCriteria criteria : criterias) {
-    					if (!description.containsKey(criteria.getCategory())
-	    					|| !description.get(criteria.getCategory()).equals(criteria.getValue())) {
+    					if (!description.containsKey(criteria.getCategory().name().toLowerCase())
+	    					|| !description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
 	    					return false;
 	    				}
     				}

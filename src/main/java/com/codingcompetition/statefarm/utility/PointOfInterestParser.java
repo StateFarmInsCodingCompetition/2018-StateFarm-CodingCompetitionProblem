@@ -55,10 +55,7 @@ public class PointOfInterestParser {
             	Node currentNode = nodeList.item(i);
 //            	System.out.println(currentNode.getAttributes());
             	PointOfInterest currentPOT = getPointOfInterest(currentNode.getAttributes());
-<<<<<<< HEAD
-            	System.out.println(i);
-//            	System.out.println(currentNode.getAttributes().getLength());
-=======
+
             	System.out.println("i " + i);
             	 if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
             		 Element element = (Element) currentNode;
@@ -75,7 +72,6 @@ public class PointOfInterestParser {
             			 currentPOT.getDescriptors().put(key, value);
             		 }
             	 }
->>>>>>> 8582f498e23c7911a414a397b87c1d726fead41a
                 potList.add(currentPOT);
      
             }
