@@ -10,10 +10,10 @@ public class PointOfInterest {
     }
 
     public String getLatitude() {
-        return "";
+        return getDescriptors().get("lat");
     }
 
     public String getLongitude() {
-        return "";
+        return getDescriptors().get("lon");
     }
 }
