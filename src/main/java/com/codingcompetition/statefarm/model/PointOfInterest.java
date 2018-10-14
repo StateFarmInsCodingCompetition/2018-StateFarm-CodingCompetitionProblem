@@ -7,16 +7,11 @@ import java.util.Map;
 
 public class PointOfInterest {
 
-    private HashMap<Category, String> descriptors;
+    private HashMap<Object, String> descriptors;
     private String latitude;
     private String longitude;
 
-    public PointOfInterest(String latitude, String longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public Map<Category, String> getDescriptors() {
+    public Map<Object, String> getDescriptors() {
         return descriptors;
     }
 
