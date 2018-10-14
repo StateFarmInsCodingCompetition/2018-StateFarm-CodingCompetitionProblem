@@ -50,6 +50,7 @@ public class StreetMapDataInterpreterTest {
 
     }
 
+    @Test
     public void returnsEmptyListWhenNullPassedIn() throws Exception {
         SearchCriteria nullCriteria = null;
         List<PointOfInterest> points = smallMetro.interpret(nullCriteria);
@@ -130,7 +131,7 @@ public class StreetMapDataInterpreterTest {
         criterias.add(criteriaAmenity);
         StreetMapDataInterpreter interpreter = new StreetMapDataInterpreter("/small-metro.xml");
         List<PointOfInterest> interpretedData = smallMetro.findByCriterias(criterias);
-
+        
         assertThat(interpretedData.size(), equalTo(17));
 
         List<PointOfInterest> wendys = interpretedData.stream().filter(pointOfInterest -> {
