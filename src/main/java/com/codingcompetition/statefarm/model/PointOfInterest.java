@@ -3,6 +3,8 @@ package com.codingcompetition.statefarm.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.codingcompetition.statefarm.Category;
+
 public class PointOfInterest {
 	
 	private Map<Object, String> desc;
@@ -15,8 +17,13 @@ public class PointOfInterest {
 		desc = new HashMap<Object, String>();
 	}
 
-	public void addDescriptor(Object k, String v ) {
-		desc.put(k, v);
+	public void addDescriptor(String k, String v) {
+		try {
+			Category key = Category.valueOf(k.toUpperCase());
+			desc.put(key, v);
+		} catch (IllegalArgumentException e) {
+			
+		}
 	}
 
     public Map<Object,String> getDescriptors() {
