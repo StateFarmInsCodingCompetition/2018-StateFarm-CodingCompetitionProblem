@@ -1,9 +1,10 @@
-Your team (name of each individual participating):
-How many JUnits were you able to get to pass? 
+Your team (name of each individual participating): Hemang Rajvanshy, Dhruva Bansal
+How many JUnits were you able to get to pass? All (17)
 
 Document and describe any enhancements included to help the judges properly grade your submission.
-	Step 1:
-	Step 2: 
+	Step 1: We made the code robust and dry, following good object oriented practices. 
+	Step 2: We added the test annotation and passed the missing test case.
 	
 	
 Feedback for the coding competition?  Things you would like to see in future events?
+The task was ambiguous, which added to the fun of discovery. At the same time, however, this makes it a little difficult for beginners to participate. 
