@@ -43,7 +43,7 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        
+        return null;
     }
 
     @Override
@@ -52,15 +52,15 @@ public class StreetMapDataInterpreter implements Interpreter {
     }
 
     private List<PointOfInterest> findNameStart(String value) {
-
+        return null;
     }
 
     private List<PointOfInterest> findNameEnd(String value) {
-
+        return null;
     }
 
     private List<PointOfInterest> findByTag(String key, String value) {
-
+        return null;
     }
 
     private String CriteriaToString(SearchCriteria criteria) {

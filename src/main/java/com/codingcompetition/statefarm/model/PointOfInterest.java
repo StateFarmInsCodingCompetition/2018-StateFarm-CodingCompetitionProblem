@@ -6,17 +6,20 @@ import java.util.Map;
 public class PointOfInterest {
     private String latitude;
     private String longitude;
+    private String id;
     private Map<Object, String> descriptors;
 
     public PointOfInterest() {
         this.latitude = "";
         this.longitude = "";
+        this.id = null;
         this.descriptors = new HashMap<>();
     }
 
-    public PointOfInterest(String latitude, String longtitude) {
+    public PointOfInterest(String latitude, String longitude, String id) {
         this.latitude = latitude;
-        this.longitude = longtitude;
+        this.longitude = longitude;
+        this.id = id;
         this.descriptors = null;
     }
 
