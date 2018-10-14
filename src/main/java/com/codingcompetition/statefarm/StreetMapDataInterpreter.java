@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 public class StreetMapDataInterpreter implements Interpreter {
 
 
-    public StreetMapDataInterpreter(String s) {
+    public StreetMapDataInterpreter(String filePath) {
+
     }
 
     @Override
