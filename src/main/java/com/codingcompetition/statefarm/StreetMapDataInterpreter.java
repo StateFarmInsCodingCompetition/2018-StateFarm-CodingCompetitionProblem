@@ -6,25 +6,35 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StreetMapDataInterpreter implements Interpreter {
+    private List<PointOfInterest> points;
 
-
-    public StreetMapDataInterpreter(String s) {
+    public StreetMapDataInterpreter(String s) throws IOException, SAXException {
+        PointOfInterestParser parser = new PointOfInterestParser();
+        points = parser.parse(s);
     }
 
     @Override
     public List<PointOfInterest> interpret() {
-        return null;
+        return points;
     }
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-        return null;
+        if (criteria == null)
+            return Collections.emptyList();
+
+        String key = criteria.getCategory().name().toLowerCase();
+        return points.stream().filter(
+                p -> p.getDescriptors().containsKey(key) && p.getDescriptors().get(key).equals(criteria.getValue()))
+                .collect(Collectors.toList());
     }
 
     @Override
