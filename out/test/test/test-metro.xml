@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="Overpass API 0.7.55.4 3079d8ea">
+<note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
+<meta osm_base="2018-09-10T12:13:02Z"/>
+	<node id="4313115741" lat="40.5330877" lon="-88.9948887" version="1" timestamp="2016-07-20T15:35:38Z" changeset="40899018" uid="3603647" user="Flugzeug149">
+		<tag k="amenity" v="fast_food"/>
+		<tag k="name" v="Wendy's"/>
+	</node>
+	<node id="4313115742" lat="40.5330877" lon="-88.9948887" version="1" timestamp="2016-07-20T15:35:38Z" changeset="40899018" uid="3603647" user="Flugzeug149">
+		<tag k="amenity" v="restaurant"/>
+		<tag k="building" v="yes"/>
+		<tag k="name" v="Made Up Name 1"/>
+	</node>
+	<node id="4313115743" lat="40.5330877" lon="-88.9948887" version="1" timestamp="2016-07-20T15:35:38Z" changeset="40899018" uid="3603647" user="Flugzeug149">
+		<tag k="amenity" v="restaurant"/>
+		<tag k="building" v="yes"/>
+		<tag k="name" v="Made Up Name 2"/>
+	</node>
+
+</osm>

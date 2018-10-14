@@ -36,40 +36,37 @@ public class PointOfInterestParser {
         Document doc = dBuilder.parse(inputFile);
         doc.getDocumentElement().normalize();
 
-        Node rootNode = doc.getFirstChild();
-        NodeList rootNodeChildren = doc.getElementsByTagName("osm").item(0).getChildNodes();
+        NodeList nList = doc.getDocumentElement().getChildNodes();
 
-        Node l = null;
-        for (int i = 0; i < rootNodeChildren.getLength(); i++) {
-          if (rootNodeChildren.item(i).getNodeName().equals("meta")) {
-            l = rootNodeChildren.item(i);
-            break;
-          }
+        for (int i = 0; i < nList.getLength(); i++) {
+            Node node = nList.item(i);
+
+            if (!node.getNodeName().equals("node")) {
+                continue;
+            }
+
+            NamedNodeMap attributeMap = node.getAttributes();
+            String latitude = attributeMap.getNamedItem("lat").getNodeValue();
+            String longitude = attributeMap.getNamedItem("lon").getNodeValue();
+            PointOfInterest poi = new PointOfInterest(latitude, longitude);
+            NodeList children = node.getChildNodes();
+            for (int j = 0; j < children.getLength(); j++) {
+                Node childNode = children.item(j);
+                if (!childNode.getNodeName().equals("tag")) {
+                    continue;
+                }
+                NamedNodeMap childAttributeMap = childNode.getAttributes();
+                String key = childAttributeMap.getNamedItem("k").getNodeValue();
+                try {
+                    Category category = Category.valueOf(key.toUpperCase());
+                    String value = childAttributeMap.getNamedItem("v").getNodeValue();
+                    poi.addDescriptor(category, value);
+                } catch (IllegalArgumentException ex) {
+
+                }
+            }
+            result.add(poi);
         }
-
-//        for (int i = 0; i < nList.getLength(); i++) {
-//          Node node = nList.item(i);
-//          if (!node.getNodeName().equals("node")) {
-//            continue;
-//          }
-//          NamedNodeMap attributeMap = node.getAttributes();
-//          String latitude = attributeMap.getNamedItem("lat").getNodeValue();
-//          String longitude = attributeMap.getNamedItem("lon").getNodeValue();
-//          PointOfInterest poi = new PointOfInterest(latitude, longitude);
-//          NodeList children = node.getChildNodes();
-//          for (int j = 0; j < children.getLength(); j++) {
-//            Node childNode  = children.item(j);
-//            if (!childNode.getNodeName().equals("tag")) {
-//              continue;
-//            }
-//            NamedNodeMap childAttributeMap = childNode.getAttributes();
-//            String key = childAttributeMap.getNamedItem("k").getNodeValue();
-//            Category category = Category.valueOf(key.toUpperCase());
-//            String value = childAttributeMap.getNamedItem("v").getNodeValue();
-//            poi.addDescriptor(category, value);
-//          }
-//          result.add(poi);
-//        }
         return result;
     }
 
