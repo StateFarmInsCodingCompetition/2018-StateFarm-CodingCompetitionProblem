@@ -30,6 +30,7 @@ public class MainPanel extends JPanel {
 			@Override
 			public void onSearchCriteriaChange(List<SearchCriteria> criteria) {
 				listPanel.onSearchCriteriaChange(criteria);
+				mapView.onSearchCriteriaChange(criteria);
 			}
 		});
 		
