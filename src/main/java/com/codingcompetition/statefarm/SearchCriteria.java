@@ -2,6 +2,10 @@ package com.codingcompetition.statefarm;
 
 import com.codingcompetition.statefarm.model.PointOfInterest;
 
+/**
+ * The SearchCriteria class can be used to perform search and
+ * filter operations on points of interest.
+ */
 public class SearchCriteria {
 
     private final Category cat;

@@ -60,7 +60,7 @@ public enum Category implements BiFunction<PointOfInterest, String, Boolean> {
             case ENDS_WITH:
                 return descriptor.toLowerCase().endsWith(value.toLowerCase());
             default:
-                return false; // this should never happen
+                return false;  // an invalid matching strategy
         }
     }
 }
