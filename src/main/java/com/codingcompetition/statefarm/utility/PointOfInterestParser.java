@@ -19,24 +19,37 @@ public class PointOfInterestParser {
 
 	private DefaultHandler handler = new DefaultHandler() {
 
+		private Map<Object, String> descriptors = new HashMap<Object, String>();
+
 		public void startElement(String uri, String localName, String qName, Attributes attributes) {
 
 			if (qName.equalsIgnoreCase("NODE")) {
 
-				elements.push(attributes.getValue("lat"));
 				elements.push(attributes.getValue("lon"));
+				elements.push(attributes.getValue("lat"));
+			}
+
+			if (qName.equalsIgnoreCase("TAG")) {
+
+				elements.push(attributes.getValue("v"));
+				elements.push(attributes.getValue("k"));
 			}
 		}
 
 		public void endElement(String uri, String localName, String qName) {
 
+			if (qName.equalsIgnoreCase("TAG")) {
+
+				descriptors.put(elements.pop(), elements.pop());
+			}
+
 			if (qName.equalsIgnoreCase("NODE")) {
 
-				Map<Object, String> descriptors = new HashMap<>();
 				descriptors.put("latitude", elements.pop());
 				descriptors.put("longitude", elements.pop());
 				objects.push(new PointOfInterest(descriptors));
 			}
+
 		}
 	};
 
