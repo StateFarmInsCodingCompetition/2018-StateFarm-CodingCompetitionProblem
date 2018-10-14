@@ -13,17 +13,27 @@ import java.util.stream.Collectors;
 
 public class StreetMapDataInterpreter implements Interpreter {
 
+    String fileStr;
 
     public StreetMapDataInterpreter(String s) {
+        fileStr = s;
     }
 
     @Override
-    public List<PointOfInterest> interpret() {
-        return null;
+    public List<PointOfInterest> interpret() throws IOException, SAXException, ParserConfigurationException  {
+        PointOfInterestParser parser = new PointOfInterestParser();
+        
+        List<PointOfInterest> interpretedData = parser.parse(fileStr);
+
+        System.out.println(interpretedData.size());
+        return interpretedData;
     }
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
+        if (criteria == null) {
+            return new ArrayList<PointOfInterest>();
+        }
         return null;
     }
 

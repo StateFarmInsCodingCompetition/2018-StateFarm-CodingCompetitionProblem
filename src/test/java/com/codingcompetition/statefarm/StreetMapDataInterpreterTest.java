@@ -36,8 +36,9 @@ public class StreetMapDataInterpreterTest {
 
     @Test
     public void canInterpretSmallMetro() throws Exception {
-
+        System.out.println("hi");
         List<PointOfInterest> interpretedData = smallMetro.interpret();
+        System.out.println(interpretedData.size());
         MatcherAssert.assertThat(interpretedData.size(), equalTo(78848));
 
     }
@@ -50,6 +51,7 @@ public class StreetMapDataInterpreterTest {
 
     }
 
+    @Test
     public void returnsEmptyListWhenNullPassedIn() throws Exception {
         SearchCriteria nullCriteria = null;
         List<PointOfInterest> points = smallMetro.interpret(nullCriteria);
