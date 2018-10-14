@@ -84,7 +84,7 @@ public class MapView extends JPanel implements SearchCriteriaListener, MouseMoti
 			if (filteredPoints.size() < 50) {
 				markerWidth = 15;
 			} else {
-				markerWidth = 5;
+				markerWidth = 8;
 			}
 			markerHeight = (int) (marker.getHeight() * 1.0 / marker.getWidth() * markerWidth);
 			
