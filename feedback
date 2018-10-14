@@ -1,9 +1,12 @@
-Your team (name of each individual participating):
-How many JUnits were you able to get to pass? 
+Your team (name of each individual participating): Matthew Musselman
+How many JUnits were you able to get to pass? All
 
 Document and describe any enhancements included to help the judges properly grade your submission.
-	Step 1:
-	Step 2: 
+	Step 1: Javadocs were added to all methods utilized by the tests.
+	Step 2: A command line interface was added to test the interpret() and interpret(SearchCriteria) methods of the StreetMapDataInterpreter.
+			It can be accessed by compiling and running DataSearch.java. No command line arguments are required; the instructions are in the program.
 	
 	
 Feedback for the coding competition?  Things you would like to see in future events?
+
+The competition was pretty difficult to start since there was very little documention, but I supposed that is part of the challenge. I would like to see more small trials that test breadth rather than one big assignment.
