@@ -67,6 +67,7 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 				double lonPercent = (Double.parseDouble(point.getLongitude()) - minLon) / (maxLon - minLon);
 				int xLoc = (int) (this.getWidth() * latPercent);
 				int yLoc = (int) (this.getHeight() * (1 - lonPercent));
+				g.drawImage(marker, xLoc - marker.getWidth() / 2, yLoc - marker.getHeight(), marker.getWidth(), marker.getHeight(), null);
 			}
 		}
 	}

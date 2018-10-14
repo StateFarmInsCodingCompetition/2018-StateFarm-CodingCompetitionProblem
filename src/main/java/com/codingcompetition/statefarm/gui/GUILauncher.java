@@ -12,7 +12,7 @@ public class GUILauncher {
 	
 	public static void main(String[] args) {
 		int option = JOptionPane.showOptionDialog(null, "Please select which XML file to load:", "Select XML File", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, files, "Select an Option");
-		String filename = File.separator + files[option];
+		String filename = "/" + files[option];
 		StreetMapDataInterpreter interpreter = new StreetMapDataInterpreter(filename);
 		MainWindow window = new MainWindow(interpreter);
 		window.setVisible(true);
