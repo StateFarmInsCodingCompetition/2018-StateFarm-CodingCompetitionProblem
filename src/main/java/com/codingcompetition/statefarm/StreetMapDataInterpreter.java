@@ -27,18 +27,36 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-    	return pois.stream().filter(
-    		t -> t.getDescriptors().get(criteria.cat).equals(criteria.value)
-        ).collect(Collectors.toList());
+    	List<PointOfInterest> list = new ArrayList<>();
+        for(PointOfInterest poi: pois) {
+        	Map<Object, String> desc = poi.getDescriptors();
+        	String key = criteria.cat.name().toLowerCase();
+        	String val = desc.get(key);
+        	if(val != null && val.equals(criteria.value)) {
+        		list.add(poi);
+        		continue;
+        	}
+
+        	String name = desc.get(Category.NAME.name().toLowerCase());
+        	if(name != null) {
+        		String value = criteria.value.toLowerCase();
+        		name = name.toLowerCase();
+        		if((criteria.cat == Category.NAMESTARTSWITH && name.startsWith(value))
+        				|| (criteria.cat == Category.NAMEENDSWITH && name.endsWith(value)))
+        			list.add(poi);
+        	}
+        }
+        return list;
     }
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        return null;
+    	return null;
     }
 
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-        return null;
+    	List<PointOfInterest> list = new ArrayList<>();
+    	return null;
     }
 }

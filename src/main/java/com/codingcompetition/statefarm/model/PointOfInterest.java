@@ -19,8 +19,8 @@ public class PointOfInterest {
 
 	public void addDescriptor(String k, String v) {
 		try {
-			Category key = Category.valueOf(k.toUpperCase());
-			desc.put(key, v);
+			Category.valueOf(k.toUpperCase());
+			desc.put(k, v);
 		} catch (IllegalArgumentException e) {
 			
 		}
