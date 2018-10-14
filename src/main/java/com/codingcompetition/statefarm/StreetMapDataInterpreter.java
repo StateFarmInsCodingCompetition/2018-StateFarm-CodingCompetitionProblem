@@ -39,9 +39,10 @@ public class StreetMapDataInterpreter implements Interpreter {
     	List<PointOfInterest> filterList = listPoints.stream()
     			.filter(point -> {
     				Map<String, String> description = point.getDescriptors();
-    				if (criteria.getCategory().name().toLowerCase().equals("nameendswith")
-    					&& description.containsKey("name")) {
-    					
+    				if ((criteria.getCategory().name().toLowerCase().equals("nameendswith")
+    					|| criteria.getCategory().name().toLowerCase().equals("namestartswith"))
+    					&& (!description.containsKey("name") || description.get("name").indexOf(criteria.getValue()) == -1)) {
+    					return false;
     				}
     				if (!description.containsKey(criteria.getCategory().name().toLowerCase())
     					|| !description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
@@ -67,7 +68,11 @@ public class StreetMapDataInterpreter implements Interpreter {
     				for (int i = 1; i <= numCriteria; i++) {
     					if (prioritizedCriteria.containsKey(i)) {
     						SearchCriteria criteria = prioritizedCriteria.get(i);
-    						
+    						if ((criteria.getCategory().name().toLowerCase().equals("nameendswith")
+								|| criteria.getCategory().name().toLowerCase().equals("namestartswith"))
+		    					&& (description.containsKey("name") && description.get("name").indexOf(criteria.getValue()) != -1)) {
+		    					return true;
+		    				}
     						if (description.containsKey(criteria.getCategory().name().toLowerCase())
 		    					&& description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
 		    					return true;
@@ -134,6 +139,11 @@ public class StreetMapDataInterpreter implements Interpreter {
     			.filter(point -> {
     				Map<String, String> description = point.getDescriptors();
     				for (SearchCriteria criteria : criterias) {
+    					if ((criteria.getCategory().name().toLowerCase().equals("nameendswith")
+							|| criteria.getCategory().name().toLowerCase().equals("namestartswith"))
+	    					&& (description.containsKey("name") && description.get("name").indexOf(criteria.getValue()) != -1)) {
+	    					return true;
+	    				}
     					if (!description.containsKey(criteria.getCategory().name().toLowerCase())
 	    					|| !description.get(criteria.getCategory().name().toLowerCase()).equals(criteria.getValue())) {
 	    					return false;
