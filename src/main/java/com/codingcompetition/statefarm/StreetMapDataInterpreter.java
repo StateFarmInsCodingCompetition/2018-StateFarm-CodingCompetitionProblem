@@ -17,12 +17,14 @@ public class StreetMapDataInterpreter implements Interpreter {
 
 
     public StreetMapDataInterpreter(String s) {
-
+        File f = new File(s);
+        List<PointOfInterest> dataList;
     }
 
     @Override
     public List<PointOfInterest> interpret() {
 
+        return null;
     }
 
     @Override
