@@ -25,11 +25,13 @@ public class PointOfInterestParser {
 
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
         ArrayList<PointOfInterest> list = new ArrayList<>();
+        String ps = File.pathSeparator;
         InputStream inputStream = new InputStream() {
             @Override
             public int read() throws IOException {
                 try {
-                    File xmlFile = new File(fileName);
+                    File xmlFile = new File(ps + "src" + ps + "main"
+                            + ps + "java" + ps + "resources" + ps + fileName);
                     SAXParserFactory factory = SAXParserFactory.newInstance();
                     SAXParser parser = factory.newSAXParser();
                     DefaultHandler handler = new DefaultHandler();
