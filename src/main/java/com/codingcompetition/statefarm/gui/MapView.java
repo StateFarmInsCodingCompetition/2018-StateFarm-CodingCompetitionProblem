@@ -45,6 +45,7 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 				background = ImageIO.read(loadRes("/map_bloomington.png"));
 			} else {
 				// Chicago
+				background = ImageIO.read(loadRes("/map_chicago.png"));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,14 +61,23 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 	public void paint(Graphics g) {
 		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
 		
+		int markerWidth, markerHeight;
+		
 		// Draw each point of interest
 		synchronized (filteredPointsLock) {
+			if (filteredPoints.size() < 50) {
+				markerWidth = 15;
+			} else {
+				markerWidth = 5;
+			}
+			markerHeight = (int) (marker.getHeight() * 1.0 / marker.getWidth() * markerWidth);
+				
 			for (PointOfInterest point : filteredPoints) {
 				double latPercent = (Double.parseDouble(point.getLatitude()) - minLat) / (maxLat - minLat);
 				double lonPercent = (Double.parseDouble(point.getLongitude()) - minLon) / (maxLon - minLon);
 				int xLoc = (int) (this.getWidth() * latPercent);
 				int yLoc = (int) (this.getHeight() * (1 - lonPercent));
-				g.drawImage(marker, xLoc - marker.getWidth() / 2, yLoc - marker.getHeight(), 15, 20, null);
+				g.drawImage(marker, xLoc - markerWidth / 2, yLoc - markerHeight, markerWidth, markerHeight, null);
 			}
 		}
 	}
@@ -81,7 +91,6 @@ public class MapView extends JPanel implements SearchCriteriaListener {
 		synchronized (filteredPointsLock) {
 			this.filteredPoints = this.interpreter.interpret(priorityMap);	
 		}
-		System.out.println("Updated " + criteria.size());
 		this.repaint();
 	}
 	
