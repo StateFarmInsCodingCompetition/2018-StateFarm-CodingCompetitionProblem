@@ -131,7 +131,7 @@ public class StreetMapDataInterpreterTest {
         criterias.add(criteriaAmenity);
         StreetMapDataInterpreter interpreter = new StreetMapDataInterpreter("/small-metro.xml");
         List<PointOfInterest> interpretedData = smallMetro.findByCriterias(criterias);
-        
+
         assertThat(interpretedData.size(), equalTo(17));
 
         List<PointOfInterest> wendys = interpretedData.stream().filter(pointOfInterest -> {
@@ -187,7 +187,8 @@ public class StreetMapDataInterpreterTest {
         List<PointOfInterest> interpretedData = smallMetro.interpret(filter);
         assertEquals(14, interpretedData.size());
         interpretedData.forEach(pointOfInterest -> {
-            assertThat(pointOfInterest.getDescriptors().get("name").substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
+            assertThat(pointOfInterest.getDescriptors().get("name")
+                    .substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
         });
 
     }
@@ -202,7 +203,8 @@ public class StreetMapDataInterpreterTest {
         List<PointOfInterest> interpretedData = smallMetro.interpret(filteringCriteria);
         assertEquals(8, interpretedData.size());
         interpretedData.forEach(pointOfInterest -> {
-            assertThat(pointOfInterest.getDescriptors().get("name").substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
+            assertThat(pointOfInterest.getDescriptors().get("name")
+                    .substring(pointOfInterest.getDescriptors().get("name").length() - 2), equalTo("'s"));
         });
 
     }
@@ -213,5 +215,3 @@ public class StreetMapDataInterpreterTest {
     }
 
 }
-
-

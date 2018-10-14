@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,27 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        return null;
+        List<PointOfInterest> found = new ArrayList<>();
+        HashSet<PointOfInterest> alreadyFound = new HashSet<>();
+        if (prioritizedCriteria == null) {
+            return found;
+        } else {
+            Map<Integer, SearchCriteria> treeMap = new TreeMap<>(prioritizedCriteria);
+            List<SearchCriteria> sortedCriteria = new ArrayList<>(treeMap.values());
+            for (SearchCriteria criteria : sortedCriteria) {
+                Category cat = criteria.getCategory();
+                String value = criteria.getValue();
+                points = points.stream().filter(p -> !alreadyFound.contains(p) && p.getDescriptors().containsKey(cat.toString().toLowerCase())
+                        && p.getDescriptors().containsValue(value)).collect(Collectors.toList());
+                // for (PointOfInterest p : all) {
+                // 	for (String s : p.getDescriptors().values()) {
+                // 		System.out.print(s + " ");
+                // 	}
+                // 	System.out.println();
+                // }
+            }
+            return points;
+        }
     }
 
     @Override
