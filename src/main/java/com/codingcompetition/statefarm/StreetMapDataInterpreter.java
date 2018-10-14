@@ -6,9 +6,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,8 +33,22 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        return this.pointsOfInterest.stream()
-                .filter(poi -> prioritizedCriteria.values().stream().allMatch(criteria -> criteria.test(poi)))
+        Map<PointOfInterest, Integer> scores = new HashMap<>();
+
+        prioritizedCriteria.forEach((priority, criteria) -> {
+            this.interpret(criteria).forEach(pointOfInterest -> {
+                scores.put(pointOfInterest, scores.getOrDefault(pointOfInterest, 0) + priority);
+            });
+        });
+
+        List<Map.Entry<PointOfInterest, Integer>> collect = scores.entrySet().stream()
+                .sorted(Comparator.comparingInt(Map.Entry::getValue))
+                .collect(Collectors.toList());
+
+        int bestScore = collect.get(collect.size() - 1).getValue();
+        return collect.stream()
+                .filter(entry -> entry.getValue() == bestScore)
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
 
