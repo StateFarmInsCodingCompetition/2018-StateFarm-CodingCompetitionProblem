@@ -14,7 +14,7 @@ public class MainWindow extends JFrame {
 	private static final Dimension WINDOW_BOUNDS = new Dimension(1500, 750);
 
 	public MainWindow(StreetMapDataInterpreter interpreter) {
-		super("OpenStreetMap Data Viewer");
+		super("OpenStreetMap Data Viewer - (c) OpenStreetMap contributors - openstreetmap.org");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
