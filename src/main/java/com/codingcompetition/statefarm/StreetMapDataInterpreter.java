@@ -13,8 +13,10 @@ import java.util.stream.Collectors;
 
 public class StreetMapDataInterpreter implements Interpreter {
 
+	String fileName;
 
     public StreetMapDataInterpreter(String s) {
+    	fileName = s;
     }
 
     @Override
