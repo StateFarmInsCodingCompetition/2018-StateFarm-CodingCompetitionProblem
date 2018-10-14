@@ -11,11 +11,21 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+            integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+            crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.icon.glyph@0.2.0/Leaflet.Icon.Glyph.js" integrity="sha256-4VhLs7I7lB1bZ9InyTu8Sx5ir7fSYNLTHbOKUJuZsl0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Map Data Viewer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,6 +35,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
+            <!--
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
@@ -39,10 +50,11 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
+            -->
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" disabled>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
         </form>
     </div>
 </nav>
@@ -50,10 +62,58 @@
 <main role="main" class="container">
 
     <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+        <hr>
+        <p class="lead">This page fetches points of interest from the api and displays them on the map. Restaurants and shopping places are marked.</p>
     </div>
-
+    <div id="mapid" style="height: 400px; width:100%"></div>
 </main><!-- /.container -->
+
+<script>
+    //41.8706000" minlon="-87.6768000" maxlat="41.9049000" maxlon="-87.6094000"/
+    var map = L.map('mapid').setView(L.latLng(41.884420, -87.645149), 18);
+
+    var tiles = "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png";
+    //var tiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    L.tileLayer(tiles, {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    fetch('/points').then(r => r.json()).then(pts => {
+        var pts2 = pts.filter(pt => Object.keys(pt.descriptors).length > 0);
+        pts2 = pts2.filter(pt => 'name' in pt.descriptors);
+        console.log(pts2);
+        for(var pt of pts2) {
+            var icon = false;
+            if ('cuisine' in pt.descriptors) {
+                icon = 'utensils';
+            }
+            else if ('shop' in pt.descriptors) {
+                icon = 'shopping-cart';
+            }
+
+
+            var opts = {};
+            if (icon) {
+                opts = {
+                    icon: L.icon.glyph({
+                        prefix: 'fa',
+                        glyph: icon
+                    })
+                };
+            }
+            var list = "<ul>";
+            for (d of Object.keys(pt.descriptors)) {
+                list += "<li>"+ d +": "+pt.descriptors[d]+"</li>";
+            }
+            list += "</ul>";
+            L.marker([pt.lat, pt.lon], opts).addTo(map)
+                    .bindPopup("<h4>"+pt.descriptors.name+"</h4>"+list)
+        }
+    });
+
+    /*L.marker([51.5, -0.09]).addTo(map)
+            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+            .openPopup();*/
+</script>
 </body>
 </html>
