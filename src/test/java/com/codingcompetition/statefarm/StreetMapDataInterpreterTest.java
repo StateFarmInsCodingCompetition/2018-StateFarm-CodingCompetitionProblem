@@ -49,7 +49,7 @@ public class StreetMapDataInterpreterTest {
         MatcherAssert.assertThat(interpretedData.size(), equalTo(116134));
 
     }
-
+    @Test
     public void returnsEmptyListWhenNullPassedIn() throws Exception {
         SearchCriteria nullCriteria = null;
         List<PointOfInterest> points = smallMetro.interpret(nullCriteria);
