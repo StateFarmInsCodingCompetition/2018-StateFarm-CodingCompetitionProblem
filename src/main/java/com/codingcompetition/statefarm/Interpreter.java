@@ -9,9 +9,9 @@ public interface Interpreter {
 
     public List<PointOfInterest> interpret();
 
-    public List<PointOfInterest> interpret(SearchCriteria criteria);
+    public List<PointOfInterest> interpret(SearchPredicate criteria);
 
-    public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria);
+    public List<PointOfInterest> interpret(Map<Integer, ? extends SearchPredicate> prioritizedCriteria);
 
-    public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias);
+    public List<PointOfInterest> findByCriterias(List<? extends SearchPredicate> criterias);
 }
