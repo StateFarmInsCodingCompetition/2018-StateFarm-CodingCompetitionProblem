@@ -23,6 +23,15 @@ import java.util.Map;
  */
 public class PointOfInterestParser {
 
+	private String fileName;
+	
+	private double minLat;
+	
+	private double minLong;
+	
+	private double maxLat;
+	
+	private double maxLong;
 
 	/**
 	 * Parses an OpenStreetMap XML file into a list of POIs
@@ -36,6 +45,8 @@ public class PointOfInterestParser {
     		throw new IllegalArgumentException("fileName cannot be null!");
     	}
     	
+    	this.fileName = fileName;
+    	
     	// Open and parse the file into a Document Object
     	Document document = null;
     	try {
@@ -44,6 +55,18 @@ public class PointOfInterestParser {
 			e.printStackTrace();
 			return null;
 		}
+    	
+    	// Fetch the bounds
+    	NodeList boundsList = document.getElementsByTagName("bounds");
+    	if (boundsList.getLength() != 1) {
+    		throw new RuntimeException("Could not load bounds for file " + fileName);
+    	}
+    	Node bounds = boundsList.item(0);
+    	NamedNodeMap attrMap = bounds.getAttributes();
+    	minLat = Double.parseDouble(attrMap.getNamedItem("minlat").getNodeValue());
+    	minLong = Double.parseDouble(attrMap.getNamedItem("minlon").getNodeValue());
+    	maxLat = Double.parseDouble(attrMap.getNamedItem("maxlat").getNodeValue());
+    	maxLong = Double.parseDouble(attrMap.getNamedItem("maxlon").getNodeValue());
     	
     	// Loop through all <node> tags
     	NodeList nodes = document.getElementsByTagName("node");
@@ -92,4 +115,23 @@ public class PointOfInterestParser {
     	
     }
 
+    public String getFileName() {
+    	return fileName;
+    }
+    
+    public double getMinLat() {
+    	return minLat;
+    }
+    
+    public double getMinLong() {
+    	return minLong;
+    }
+    
+    public double getMaxLat() {
+    	return maxLat;
+    }
+    
+    public double getMaxLong() {
+    	return maxLong;
+    }
 }
