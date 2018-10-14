@@ -36,6 +36,7 @@ public class PointOfInterestParser {
                     SAXParser parser = factory.newSAXParser();
                     DefaultHandler handler = new DefaultHandler();
                     parser.parse(xmlFile, handler);
+                    list.add(new PointOfInterest("a", "b"));
                 } catch (ParserConfigurationException | SAXException e) {
                     System.out.print(e.getMessage());
                 }
