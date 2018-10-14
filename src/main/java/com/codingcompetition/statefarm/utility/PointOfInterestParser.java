@@ -18,16 +18,18 @@ public class PointOfInterestParser {
 
 
     // Stacks for storing the elements and objects.
-    private Stack<String> elements = new Stack<String>();
     private Stack<PointOfInterest> objects = new Stack<PointOfInterest>();
 
-
+    // implements the handler for the SAXParser
     private class POIHandler extends DefaultHandler {
+        // keeps track of whether you are inside of a node or not
         boolean inNode = false;
+
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes)
                 throws SAXException {
-
+                
+            // either adds a new node to the stack or adds a descriptor to the topmost node (if we are in a node)
             if (qName.equalsIgnoreCase("node")) {
                 PointOfInterest p = new PointOfInterest(attributes.getValue("lat"), attributes.getValue("lon"));
                 objects.push(p);
@@ -42,11 +44,6 @@ public class PointOfInterestParser {
             if (qName.equalsIgnoreCase("node")) {
                 inNode = false;
             }
-        }
-
-        @Override
-        public void characters(char ch[], int start, int length) throws SAXException {
-
         }
     }
 

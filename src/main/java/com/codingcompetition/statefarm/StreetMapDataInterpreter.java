@@ -25,11 +25,20 @@ public class StreetMapDataInterpreter implements Interpreter {
         }
     }
 
+    /**
+     * Unfiltered list of points parsed from files
+     * @return Returns all parsed points of interest
+     */
     @Override
     public List<PointOfInterest> interpret() {
         return points;
     }
 
+    /**
+     * Applies a single filter to the points
+     * @param criteria The single SearchCriteria to apply
+     * @return The list of points to which the single filter applies
+     */
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
         List<PointOfInterest> found = new ArrayList<>();
@@ -54,6 +63,11 @@ public class StreetMapDataInterpreter implements Interpreter {
         }
     }
 
+    /**
+     * Applies multiple criteria in order of priority, all criteria must be fulfilled, like logical AND
+     * @param prioritizedCriteria The Map containing SearchCriteria and their associated priority as key, 1 is highest priority
+     * @return The list of points to which all criteria apply in their priority order
+     */
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
         if (prioritizedCriteria == null) {
@@ -81,6 +95,11 @@ public class StreetMapDataInterpreter implements Interpreter {
         }
     }
 
+    /**
+     * Applies all criteria in an overlapping fashion, like logical OR
+     * @param criterias The list of criteria to apply
+     * @return List of points to which at least one criteria applies
+     */
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
         List<PointOfInterest> found = new ArrayList<>();
