@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.codingcompetition.statefarm.SearchCriteria;
@@ -142,7 +143,12 @@ public class MapView extends JPanel implements SearchCriteriaListener, MouseMoti
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (selected != null) {
-			//TODO show details panel for selected PointOfInterest
+			String str = "";
+			for (Object key : selected.getDescriptors().keySet()) {
+				str += " " + (String)key + ": " + selected.getDescriptors().get(key) + "\n";
+			}
+			str = str.trim();
+			JOptionPane.showMessageDialog(null, str, "Detail Information", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
