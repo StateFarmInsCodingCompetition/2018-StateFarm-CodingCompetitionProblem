@@ -6,7 +6,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,13 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(SearchCriteria criteria) {
-        return null;
+        List<PointOfInterest> newList = new ArrayList<>();
+        for (PointOfInterest poi : dataList) {
+            if (poi.getDescriptors().values().contains(criteria.getValue())) {
+                newList.add(poi);
+            }
+        }
+        return newList;
     }
 
     @Override
@@ -39,6 +44,8 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-        return null;
+        List<PointOfInterest> newList = new ArrayList<>();
+        //some stuff here
+        return newList;
     }
 }

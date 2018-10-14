@@ -9,4 +9,8 @@ public class SearchCriteria {
 		this.cat = cat;
 		this.value = value;
 	}
+
+	public String getValue() {
+	    return this.value;
+    }
 }
