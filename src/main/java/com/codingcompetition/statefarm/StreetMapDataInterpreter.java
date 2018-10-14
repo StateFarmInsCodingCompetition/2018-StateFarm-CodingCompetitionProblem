@@ -21,6 +21,19 @@ public class StreetMapDataInterpreter implements Interpreter {
         points = parser.parse(s);
     }
 
+    public boolean matchesCriteria(PointOfInterest p, SearchCriteria sc) {
+        if (sc.getCategory() == Category.NAMEENDSWITH) {
+            return p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").endsWith(sc.getValue());
+        }
+        else if (sc.getCategory() == Category.NAMESTARTSWITH) {
+            return p.getDescriptors().containsKey("name") && p.getDescriptors().get("name").startsWith(sc.getValue());
+        }
+        else {
+            String key = sc.getCategory().name().toLowerCase();
+            return p.getDescriptors().containsKey(key) && p.getDescriptors().get(key).equals(sc.getValue());
+        }
+    }
+
     @Override
     public List<PointOfInterest> interpret() {
         return points;
@@ -31,9 +44,8 @@ public class StreetMapDataInterpreter implements Interpreter {
         if (criteria == null)
             return Collections.emptyList();
 
-        String key = criteria.getCategory().name().toLowerCase();
-        return points.stream().filter(
-                p -> p.getDescriptors().containsKey(key) && p.getDescriptors().get(key).equals(criteria.getValue()))
+        return points.stream()
+                .filter(p -> matchesCriteria(p, criteria))
                 .collect(Collectors.toList());
     }
 
@@ -44,6 +56,9 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
-        return null;
+        return points.stream()
+                .filter( p ->
+                        criterias.stream().anyMatch(sc -> matchesCriteria(p, sc)))
+                .collect(Collectors.toList());
     }
 }
