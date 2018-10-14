@@ -23,6 +23,7 @@ public class PointOfInterestParser {
 
 
     public List<PointOfInterest> parse(String fileName) throws IOException, SAXException {
+
    return null;
     }
 

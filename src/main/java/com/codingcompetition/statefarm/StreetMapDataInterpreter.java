@@ -12,9 +12,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StreetMapDataInterpreter implements Interpreter {
-
+    private String s;
 
     public StreetMapDataInterpreter(String s) {
+        this.s = s;
     }
 
     @Override
