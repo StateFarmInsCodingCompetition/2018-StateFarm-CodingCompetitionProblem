@@ -1,7 +1,9 @@
 package com.codingcompetition.statefarm.model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class PointOfInterest {
     private String latitude;
@@ -38,4 +40,13 @@ public class PointOfInterest {
     public String getLongitude() {
         return this.longitude;
     }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public String getValueFromTag(String tag) {
+        return this.descriptors.get(tag);
+    }
+
 }
