@@ -1,7 +1,5 @@
 package com.codingcompetition.statefarm.model;
 
-import com.codingcompetition.statefarm.Category;
-
 import java.util.HashMap;
 import java.util.Map;
 
