@@ -5,6 +5,7 @@ import com.codingcompetition.statefarm.utility.PointOfInterestParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -84,6 +85,10 @@ public class StreetMapDataInterpreter implements Interpreter {
      */
     @Override
     public List<PointOfInterest> findByCriterias(List<SearchCriteria> criterias) {
+    	if (criterias == null || criterias.contains(null)) {
+    		return new LinkedList<>();
+    	}
+    	
         return interestList.stream()
         		.filter(poi -> {
         			for (SearchCriteria criteria : criterias) {
