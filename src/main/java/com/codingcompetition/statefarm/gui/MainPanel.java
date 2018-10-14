@@ -22,7 +22,7 @@ public class MainPanel extends JPanel {
 	public MainPanel(StreetMapDataInterpreter interpreter) {
 		this.setLayout(new BorderLayout());
 		
-		listPanel = new ListPanel("Results");
+		listPanel = new ListPanel("Results", interpreter);
 		searchPanel = new SearchPanel();
 		mapView = new MapView(interpreter);
 		
