@@ -46,7 +46,28 @@ public class StreetMapDataInterpreter implements Interpreter {
 
     @Override
     public List<PointOfInterest> interpret(Map<Integer, SearchCriteria> prioritizedCriteria) {
-        return null;
+        List<PointOfInterest> res = new ArrayList<>();
+        if (prioritizedCriteria == null || prioritizedCriteria.size() == 0) {
+            return res;
+        }
+
+        for (PointOfInterest curPoi : poiList) {
+            Map<Object, String> desMap = curPoi.getDescriptors();
+
+            boolean satisfy = true;
+            for (SearchCriteria criteria : prioritizedCriteria.values()) {
+                if (!isCriteriaSatisfy(criteria, desMap)) {
+                    satisfy = false;
+                    break;
+                }
+            }
+
+            if (satisfy) {
+                res.add(curPoi);
+            }
+        }
+
+        return res;
     }
 
     @Override
